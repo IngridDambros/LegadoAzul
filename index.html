@@ -7,1409 +7,228 @@
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --creme:      #faf8f4;
-  --azul-esc:   #2d83b0;
-  --azul-cla:   #a8cce8;
-  --azul-mid:   #5ca0c7;
-  --verde-cla:  #9dd5bb;
-  --verde-esc:  #3a9e72;
-  --amar-cla:   #f7d98a;
-  --amar-esc:   #c8920a;
-  --roxo-cla:   #c5b3e8;
-  --roxo-esc:   #7e57c2;
-  --texto:      #2c3e50;
-  --texto-suave:#6b7f8e;
-  --branco:     #ffffff;
-  --sombra:     0 4px 24px rgba(44,62,80,0.07);
-  --fonte-titulo: 'Quicksand', sans-serif;
-  --fonte-corpo:  'Lora', serif;
-  --fonte-humana: 'Caveat', cursive;
-  --trans: all 0.4s cubic-bezier(0.4,0,0.2,1);
+  --creme:     #faf8f4;
+  --azul-esc:  #2d83b0;
+  --azul-cla:  #a8cce8;
+  --azul-mid:  #5ca0c7;
+  --verde-esc: #3a9e72;
+  --verde-cla: #9dd5bb;
+  --amar-esc:  #c8920a;
+  --amar-cla:  #f7d98a;
+  --roxo-esc:  #7e57c2;
+  --roxo-cla:  #c5b3e8;
+  --texto:     #2c3e50;
+  --suave:     #6b7f8e;
+  --ft: 'Quicksand', sans-serif;
+  --fc: 'Lora', serif;
+  --fh: 'Caveat', cursive;
+  --tr: all 0.4s cubic-bezier(0.4,0,0.2,1);
 }
-
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
 html { scroll-behavior: smooth; }
+body { font-family: var(--fc); background: var(--creme); color: var(--texto); line-height:1.8; overflow-x:hidden; }
 
-body {
-  font-family: var(--fonte-corpo);
-  background: var(--creme);
-  color: var(--texto);
-  line-height: 1.8;
-  overflow-x: hidden;
-}
+/* ═══ NAV ═══ */
+header { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(250,248,244,0.93); backdrop-filter:blur(14px); border-bottom:1px solid rgba(168,204,232,0.2); }
+nav { max-width:1200px; margin:0 auto; padding:0 5%; height:64px; display:flex; align-items:center; justify-content:space-between; }
+.nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+.nav-nome .n1 { font-family:'Georgia',serif; font-size:14px; font-weight:700; letter-spacing:3px; color:var(--texto); display:block; line-height:1; }
+.nav-nome .n2 { font-family:'Georgia',serif; font-size:13px; font-weight:300; letter-spacing:4px; color:var(--azul-esc); display:block; margin-top:2px; }
+.nav-links { display:flex; align-items:center; gap:2px; }
+.nav-ico { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:var(--tr); text-decoration:none; border:none; background:transparent; position:relative; }
+.nav-ico svg { width:19px; height:19px; transition:var(--tr); }
+.nav-ico.ativo { background:rgba(168,204,232,0.2); }
+.nav-ico.ativo svg { stroke:var(--azul-esc); }
+.nav-ico:not(.ativo) svg { stroke:var(--azul-mid); opacity:0.65; }
+.nav-ico[data-cor="verde"].ativo { background:rgba(157,213,187,0.2); }
+.nav-ico[data-cor="verde"].ativo svg { stroke:var(--verde-esc); }
+.nav-ico[data-cor="amarelo"].ativo { background:rgba(247,217,138,0.25); }
+.nav-ico[data-cor="amarelo"].ativo svg { stroke:var(--amar-esc); }
+.nav-ico[data-cor="roxo"].ativo { background:rgba(197,179,232,0.25); }
+.nav-ico[data-cor="roxo"].ativo svg { stroke:var(--roxo-esc); }
+.nav-ico::after { content:attr(data-tip); position:absolute; bottom:-32px; left:50%; transform:translateX(-50%) translateY(4px); background:var(--texto); color:white; font-family:var(--ft); font-size:10px; font-weight:600; letter-spacing:.5px; padding:4px 9px; border-radius:6px; white-space:nowrap; opacity:0; pointer-events:none; transition:all .2s; }
+.nav-ico:hover::after { opacity:1; transform:translateX(-50%) translateY(0); }
 
-/* ═══════════════════════════════
-   NAV
-═══════════════════════════════ */
-header {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 1000;
-  background: rgba(250,248,244,0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(168,204,232,0.25);
-  transition: var(--trans);
-}
-nav {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 5%;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-}
-.nav-nome .n1 {
-  font-family: 'Georgia', serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  color: var(--texto);
-  display: block;
-  line-height: 1;
-}
-.nav-nome .n2 {
-  font-family: 'Georgia', serif;
-  font-size: 13px;
-  font-weight: 300;
-  letter-spacing: 4px;
-  color: var(--azul-esc);
-  display: block;
-  line-height: 1;
-  margin-top: 2px;
-}
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.nav-ico {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--trans);
-  position: relative;
-  border: none;
-  background: transparent;
-  text-decoration: none;
-}
-.nav-ico svg {
-  width: 20px;
-  height: 20px;
-  transition: var(--trans);
-}
-.nav-ico:hover,
-.nav-ico.ativo {
-  background: rgba(168,204,232,0.25);
-}
-.nav-ico.ativo svg { stroke: var(--azul-esc); }
-.nav-ico:not(.ativo) svg { stroke: var(--azul-mid); opacity: 0.7; }
-.nav-ico::after {
-  content: attr(data-tip);
-  position: absolute;
-  bottom: -36px;
-  left: 50%;
-  transform: translateX(-50%) translateY(4px);
-  background: var(--texto);
-  color: white;
-  font-family: var(--fonte-titulo);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  padding: 5px 10px;
-  border-radius: 6px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.2s ease;
-}
-.nav-ico:hover::after {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
+/* ═══ SEÇÕES ═══ */
+section { position:relative; overflow:hidden; }
+.sec-inner { position:relative; z-index:2; max-width:1100px; margin:0 auto; padding:120px 5% 80px; width:100%; }
+.ondas-bg, .ondas-topo { position:absolute; left:0; width:100%; pointer-events:none; z-index:0; }
+.ondas-bg { bottom:0; }
+.ondas-topo { top:0; }
 
-/* ═══════════════════════════════
-   SEÇÕES GERAIS
-═══════════════════════════════ */
-section {
-  position: relative;
-  overflow: hidden;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-}
-.sec-inner {
-  position: relative;
-  z-index: 2;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 120px 5% 80px;
-  width: 100%;
-}
+/* ═══ HERO ═══ */
+#semente { background:var(--creme); min-height:100vh; display:flex; align-items:center; }
+.hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+.hero-label { font-family:var(--ft); font-size:.72rem; text-transform:uppercase; letter-spacing:2.5px; color:var(--azul-esc); margin-bottom:18px; display:block; opacity:.8; }
+.hero-h1 { font-family:var(--ft); font-size:clamp(2rem,4vw,3rem); font-weight:700; color:var(--texto); line-height:1.2; margin-bottom:10px; }
+.hero-ms { font-family:var(--fh); font-size:clamp(1.6rem,3vw,2.2rem); color:var(--azul-esc); display:block; margin-bottom:24px; }
+.hero-p { font-size:1rem; color:var(--suave); line-height:1.85; margin-bottom:36px; max-width:480px; }
+.hero-btns { display:flex; gap:14px; flex-wrap:wrap; }
+.btn-pri { background:var(--azul-esc); color:white; border:none; border-radius:50px; padding:14px 28px; font-family:var(--ft); font-size:.88rem; font-weight:700; cursor:pointer; transition:var(--tr); text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
+.btn-pri:hover { background:var(--texto); transform:translateY(-2px); box-shadow:0 8px 24px rgba(45,131,176,.3); }
+.btn-sec { background:transparent; color:var(--azul-esc); border:1.5px solid var(--azul-cla); border-radius:50px; padding:13px 28px; font-family:var(--ft); font-size:.88rem; font-weight:600; cursor:pointer; transition:var(--tr); text-decoration:none; display:inline-flex; align-items:center; }
+.btn-sec:hover { background:rgba(168,204,232,.2); border-color:var(--azul-esc); transform:translateY(-2px); }
+.hero-visual { display:flex; align-items:center; justify-content:center; position:relative; }
+.hero-digital-wrap { position:relative; display:flex; align-items:center; justify-content:center; }
+.hero-digital-wrap > svg { animation:pulso 4s ease-in-out infinite; }
+@keyframes pulso { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.04);opacity:.85} }
+.hero-tag { position:absolute; background:white; border:1px solid rgba(168,204,232,.4); border-radius:50px; padding:8px 14px; font-family:var(--ft); font-size:.72rem; font-weight:600; white-space:nowrap; box-shadow:0 4px 16px rgba(0,0,0,.06); display:flex; align-items:center; gap:6px; animation:flutua 3s ease-in-out infinite; }
+.tag-1 { top:30px; left:-30px; animation-delay:0s; }
+.tag-2 { top:30px; right:-20px; animation-delay:.7s; }
+.tag-3 { bottom:80px; left:-30px; animation-delay:1.4s; }
+.tag-4 { bottom:40px; right:-20px; animation-delay:2.1s; }
+@keyframes flutua { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 
-/* Ondas de fundo — SVG absoluto */
-.ondas-bg {
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
-.ondas-topo {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
+/* Cards "como funciona" */
+.como-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:60px; }
+.como-card { background:white; border-radius:24px; padding:32px 24px; text-align:center; border:1px solid rgba(168,204,232,.15); transition:var(--tr); }
+.como-card:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,.07); }
+.como-num { font-family:var(--fh); font-size:2.5rem; color:var(--azul-cla); line-height:1; margin-bottom:10px; display:block; }
+.como-card h4 { font-family:var(--ft); font-size:.95rem; font-weight:700; color:var(--texto); margin-bottom:8px; }
+.como-card p { font-size:.83rem; color:var(--suave); line-height:1.65; }
 
-/* ═══════════════════════════════
-   01 HERO + PAUSA — AZUL
-═══════════════════════════════ */
-#inicio {
-  background: var(--creme);
-  min-height: 100vh;
-}
+/* ═══ PILAR SEÇÕES ═══ */
+.pilar-sec { min-height:100vh; display:flex; align-items:center; }
+.pilar-grid { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center; }
+.pilar-grid.reverse { direction:rtl; }
+.pilar-grid.reverse > * { direction:ltr; }
+.pilar-tag { font-family:var(--ft); font-size:.68rem; text-transform:uppercase; letter-spacing:2.5px; display:block; margin-bottom:14px; opacity:.75; }
+.pilar-h2 { font-family:var(--ft); font-size:clamp(1.8rem,3vw,2.5rem); font-weight:700; color:var(--texto); line-height:1.2; margin-bottom:10px; }
+.pilar-ms { font-family:var(--fh); font-size:1.8rem; display:block; margin-bottom:18px; }
+.pilar-p { font-size:.98rem; color:var(--suave); line-height:1.85; margin-bottom:28px; }
+.recursos-lista { display:flex; flex-direction:column; gap:10px; }
+.recurso-item { display:flex; align-items:flex-start; gap:14px; background:white; border-radius:16px; padding:14px 16px; border:1px solid rgba(0,0,0,.04); transition:var(--tr); }
+.recurso-item:hover { transform:translateX(4px); box-shadow:0 6px 20px rgba(0,0,0,.06); }
+.rec-ico { width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.rec-ico svg { width:17px; height:17px; }
+.rec-nm { font-family:var(--ft); font-size:.88rem; font-weight:700; color:var(--texto); margin-bottom:2px; }
+.rec-sub { font-size:.76rem; color:var(--suave); line-height:1.5; }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-}
+/* ═══ PHONE FRAME ═══ */
+.pilar-phone { display:flex; justify-content:center; align-items:center; }
+.phone-frame { width:255px; background:#18181b; border-radius:42px; padding:10px; box-shadow:0 32px 80px rgba(0,0,0,.22), 0 0 0 1px rgba(255,255,255,.04); }
+.phone-notch { width:76px; height:20px; background:#18181b; border-radius:0 0 13px 13px; margin:0 auto 6px; }
+.phone-screen { border-radius:32px; overflow:hidden; }
+.pm { background:var(--creme); padding:18px 14px; min-height:450px; }
+.pm-header { display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+.pm-back { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+.pm-back svg { width:13px; height:13px; }
+.pm-title { font-family:var(--ft); font-size:.82rem; font-weight:700; color:var(--texto); }
+.pm-banner { border-radius:13px; padding:12px 14px; margin-bottom:16px; }
+.pm-banner p { font-size:.68rem; color:white; line-height:1.5; }
+.pm-card { background:white; border-radius:11px; padding:10px 12px; display:flex; align-items:center; gap:10px; margin-bottom:7px; box-shadow:0 2px 6px rgba(0,0,0,.05); }
+.pm-card-ico { width:32px; height:32px; border-radius:9px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.pm-card-ico svg { width:15px; height:15px; }
+.pm-card-nm { font-family:var(--ft); font-size:.72rem; font-weight:700; color:var(--texto); }
+.pm-card-sub { font-size:.6rem; color:var(--suave); }
+.pm-ar { margin-left:auto; flex-shrink:0; }
+.pm-ar svg { width:11px; height:11px; stroke:#ccc; }
 
-.hero-label {
-  font-family: var(--fonte-titulo);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  color: var(--azul-esc);
-  margin-bottom: 18px;
-  display: block;
-  opacity: 0.8;
-}
-.hero-h1 {
-  font-family: var(--fonte-titulo);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
-  color: var(--texto);
-  line-height: 1.2;
-  margin-bottom: 10px;
-}
-.hero-manuscrito {
-  font-family: var(--fonte-humana);
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  color: var(--azul-esc);
-  display: block;
-  margin-bottom: 24px;
-  line-height: 1.3;
-}
-.hero-p {
-  font-size: 1rem;
-  color: var(--texto-suave);
-  line-height: 1.85;
-  margin-bottom: 36px;
-  max-width: 480px;
-}
-.hero-btns {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-.btn-pri {
-  background: var(--azul-esc);
-  color: white;
-  border: none;
-  border-radius: 50px;
-  padding: 14px 28px;
-  font-family: var(--fonte-titulo);
-  font-size: 0.88rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--trans);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.btn-pri:hover {
-  background: var(--texto);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(45,131,176,0.3);
-}
-.btn-sec {
-  background: transparent;
-  color: var(--azul-esc);
-  border: 1.5px solid var(--azul-cla);
-  border-radius: 50px;
-  padding: 13px 28px;
-  font-family: var(--fonte-titulo);
-  font-size: 0.88rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--trans);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-}
-.btn-sec:hover {
-  background: rgba(168,204,232,0.2);
-  border-color: var(--azul-esc);
-  transform: translateY(-2px);
-}
+/* ═══ CTA ESPERA ═══ */
+.cta-espera { background:white; border-radius:32px; padding:48px 56px; max-width:640px; margin:60px auto 0; text-align:center; border:1px solid rgba(168,204,232,.2); box-shadow:0 20px 60px rgba(45,131,176,.07); }
+.cta-espera h3 { font-family:var(--ft); font-size:1.4rem; font-weight:700; color:var(--texto); margin-bottom:8px; }
+.cta-espera p { font-size:.9rem; color:var(--suave); margin-bottom:28px; }
+.cta-form { display:flex; gap:10px; max-width:420px; margin:0 auto 14px; }
+.cta-input { flex:1; border:1.5px solid rgba(168,204,232,.4); border-radius:50px; padding:13px 20px; font-family:var(--ft); font-size:.85rem; color:var(--texto); background:var(--creme); outline:none; transition:var(--tr); }
+.cta-input:focus { border-color:var(--azul-esc); box-shadow:0 0 0 3px rgba(45,131,176,.1); }
+.cta-input::placeholder { color:#b8c4cc; }
+.cta-btn { background:var(--roxo-esc); color:white; border:none; border-radius:50px; padding:13px 22px; font-family:var(--ft); font-size:.82rem; font-weight:700; cursor:pointer; transition:var(--tr); white-space:nowrap; display:flex; align-items:center; gap:6px; }
+.cta-btn:hover { background:var(--texto); transform:translateY(-2px); }
+.cta-btn:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+.cta-btn svg { width:14px; height:14px; stroke:white; }
+.cta-feedback { font-size:.8rem; min-height:18px; text-align:center; }
+.cta-feedback.sucesso { color:#3a7e5c; }
+.cta-feedback.erro    { color:#c95b5b; }
+.cta-nota { font-size:.7rem; color:#bbb; margin-top:10px; }
+.cta-ms { font-family:var(--fh); font-size:1.4rem; color:var(--roxo-esc); margin-top:16px; display:block; }
 
-/* Digital hero lado direito */
-.hero-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.hero-digital-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.hero-digital-wrap svg {
-  animation: pulso-digital 4s ease-in-out infinite;
-}
-@keyframes pulso-digital {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.04); opacity: 0.85; }
-}
-.hero-tag {
-  position: absolute;
-  background: white;
-  border: 1px solid rgba(168,204,232,0.4);
-  border-radius: 50px;
-  padding: 8px 16px;
-  font-family: var(--fonte-titulo);
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--azul-esc);
-  white-space: nowrap;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-  animation: flutua 3s ease-in-out infinite;
-}
-/* Formato Z: topo-esq → topo-dir → baixo-esq → baixo-dir */
-.tag-1 { top: 30px;  left: -30px;  animation-delay: 0s; }
-.tag-2 { top: 30px;  right: -20px; animation-delay: 0.7s; }
-.tag-3 { bottom: 80px; left: -30px; animation-delay: 1.4s; }
-.tag-4 { bottom: 40px; right: -20px; animation-delay: 2.1s; }
-@keyframes flutua {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
+/* ═══ FOOTER ═══ */
+footer { background:var(--creme); border-top:1px solid rgba(168,204,232,.2); padding:28px 5%; text-align:center; }
+footer p { font-size:.78rem; color:#bbb; font-family:var(--ft); }
 
-/* ── Pausa (dentro da seção 01) */
-.pausa-wrap {
-  margin-top: 80px;
-  padding-top: 60px;
-  border-top: 1px solid rgba(168,204,232,0.3);
-}
-.pausa-centro {
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto;
-}
-.circulo-resp {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(92,160,199,0.35);
-  background: white;
-  margin: 0 auto 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: pulso-resp 6s ease-in-out infinite;
-}
-.circulo-resp span {
-  font-family: var(--fonte-titulo);
-  font-size: 0.72rem;
-  color: var(--azul-mid);
-  letter-spacing: 1.5px;
-}
-@keyframes pulso-resp {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(92,160,199,0.15); }
-  50% { transform: scale(1.15); box-shadow: 0 0 0 20px rgba(92,160,199,0); }
-}
-.pausa-titulo {
-  font-family: var(--fonte-titulo);
-  font-size: 1.1rem;
-  color: var(--texto);
-  margin-bottom: 8px;
-}
-.pausa-manuscrito {
-  font-family: var(--fonte-humana);
-  font-size: 2rem;
-  color: var(--azul-esc);
-  display: block;
-  margin-bottom: 16px;
-}
-.caixa-cit {
-  background: white;
-  border-radius: 55% 45% 48% 52% / 48% 52% 48% 52%;
-  padding: 40px 48px;
-  margin: 32px auto;
-  max-width: 560px;
-  border: 1px solid rgba(168,204,232,0.2);
-}
-.cit-texto {
-  font-family: var(--fonte-humana);
-  font-size: 1.6rem;
-  color: var(--texto);
-  line-height: 1.4;
-  margin-bottom: 12px;
-}
-.cit-nota {
-  font-size: 0.88rem;
-  color: #aaa;
-}
-.permissoes-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 20px;
-  margin-top: 48px;
-}
-.perm-card {
-  background: white;
-  padding: 36px 28px;
-  text-align: center;
-  border: 1px solid rgba(168,204,232,0.15);
-  transition: var(--trans);
-}
-.perm-card:nth-child(1) { border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%; }
-.perm-card:nth-child(2) { border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%; }
-.perm-card:nth-child(3) { border-radius: 50% 50% 60% 40% / 40% 60% 45% 55%; }
-.perm-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--sombra);
-  border-color: rgba(168,204,232,0.3);
-}
-.perm-ico {
-  width: 22px; height: 22px;
-  stroke: var(--azul-mid);
-  margin: 0 auto 14px;
-  display: block;
-  opacity: 0.7;
-}
-.perm-card h5 {
-  font-family: var(--fonte-titulo);
-  font-size: 0.95rem;
-  color: var(--texto);
-  margin-bottom: 8px;
-  font-weight: 700;
-}
-.perm-card p {
-  font-size: 0.85rem;
-  color: var(--texto-suave);
-  line-height: 1.7;
-}
-
-/* Varal carrossel */
-.varal-wrap {
-  margin-top: 60px;
-  text-align: center;
-}
-.varal-titulo {
-  font-family: var(--fonte-humana);
-  font-size: 2.2rem;
-  color: var(--azul-esc);
-  margin-bottom: 8px;
-}
-.varal-intro {
-  font-size: 0.9rem;
-  color: #aaa;
-  margin-bottom: 32px;
-}
-.balao-unico {
-  background: white;
-  border: 1px solid rgba(168,204,232,0.2);
-  border-radius: 55% 45% 52% 48% / 50% 55% 45% 50%;
-  padding: 40px 36px;
-  max-width: 300px;
-  margin: 0 auto 24px;
-}
-.balao-unico p {
-  font-size: 0.9rem;
-  color: var(--azul-mid);
-  font-style: italic;
-  line-height: 1.75;
-  margin-bottom: 12px;
-}
-.balao-unico .autor {
-  font-family: var(--fonte-titulo);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--texto);
-  opacity: 0.4;
-}
-
-/* ═══════════════════════════════
-   02 METODOLOGIA — VERDE
-═══════════════════════════════ */
-#metodologia {
-  background: var(--creme);
-}
-.sec-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-.sec-label {
-  font-family: var(--fonte-titulo);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  margin-bottom: 12px;
-  display: block;
-  opacity: 0.75;
-}
-.sec-h2 {
-  font-family: var(--fonte-titulo);
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
-  font-weight: 700;
-  color: var(--texto);
-  margin-bottom: 8px;
-  line-height: 1.25;
-}
-.sec-manuscrito {
-  font-family: var(--fonte-humana);
-  font-size: 1.8rem;
-  display: block;
-  margin-bottom: 16px;
-}
-.sec-p {
-  font-size: 1rem;
-  color: var(--texto-suave);
-  max-width: 580px;
-  margin: 0 auto;
-  line-height: 1.85;
-}
-
-/* Bolha pilares */
-.bolha-4pilares {
-  background: white;
-  border: 1px solid rgba(157,213,187,0.3);
-  border-radius: 50px;
-  padding: 20px 32px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  max-width: fit-content;
-  margin: 0 auto 50px;
-  flex-wrap: wrap;
-}
-.mini-pilar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-.mini-pilar svg {
-  width: 22px; height: 22px;
-  stroke: var(--verde-esc);
-  opacity: 0.8;
-}
-.mini-pilar span {
-  font-family: var(--fonte-titulo);
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--verde-esc);
-  letter-spacing: 0.5px;
-}
-
-.pilares-grid {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 24px;
-  max-width: 900px;
-  margin: 0 auto;
-}
-.pilar-card {
-  background: white;
-  padding: 44px 38px 40px;
-  border: 1px solid rgba(157,213,187,0.2);
-  transition: var(--trans);
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.pilar-card:nth-child(1) { border-radius: 55% 45% 40% 60% / 50% 40% 60% 50%; }
-.pilar-card:nth-child(2) { border-radius: 40% 60% 55% 45% / 60% 50% 40% 50%; }
-.pilar-card:nth-child(3) { border-radius: 50% 50% 45% 55% / 40% 60% 50% 50%; }
-.pilar-card:nth-child(4) { border-radius: 45% 55% 50% 50% / 55% 45% 55% 45%; }
-.pilar-card:hover {
-  transform: translateY(-6px) rotate(0.4deg);
-  box-shadow: 0 16px 40px rgba(58,158,114,0.1);
-  border-color: rgba(157,213,187,0.4);
-}
-.pilar-ico-wrap {
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  background: rgba(157,213,187,0.2);
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 18px;
-}
-.pilar-ico-wrap svg {
-  width: 22px; height: 22px;
-  stroke: var(--verde-esc);
-  opacity: 0.85;
-}
-.pilar-card h3 {
-  font-family: var(--fonte-titulo);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--texto);
-  margin-bottom: 4px;
-  text-align: center;
-}
-.pilar-sub {
-  font-family: var(--fonte-titulo);
-  font-size: 0.75rem;
-  color: var(--verde-esc);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 14px;
-  display: block;
-  opacity: 0.8;
-  text-align: center;
-}
-.pilar-card p {
-  font-size: 0.88rem;
-  color: var(--texto-suave);
-  line-height: 1.75;
-  margin-bottom: 16px;
-  text-align: center;
-}
-.pilar-cit {
-  font-family: var(--fonte-humana);
-  font-size: 1.1rem;
-  color: var(--verde-esc);
-  font-style: italic;
-  opacity: 0.85;
-  border-top: 1px solid rgba(157,213,187,0.3);
-  padding-top: 14px;
-}
-
-/* ═══════════════════════════════
-   03 HISTÓRIA + DIREITOS — AMARELO
-═══════════════════════════════ */
-#historia {
-  background: var(--creme);
-}
-
-/* Timeline */
-.timeline {
-  max-width: 800px;
-  margin: 0 auto 80px;
-  position: relative;
-}
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 24px;
-  top: 0; bottom: 0;
-  width: 1px;
-  background: linear-gradient(to bottom, rgba(200,146,10,0.3), rgba(200,146,10,0.05));
-}
-.momento {
-  display: flex;
-  gap: 24px;
-  margin-bottom: 40px;
-  position: relative;
-}
-.momento-dot {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(247,217,138,0.35);
-  border: 1.5px solid rgba(200,146,10,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
-}
-.momento-dot svg {
-  width: 20px; height: 20px;
-  stroke: var(--amar-esc);
-  opacity: 0.85;
-}
-.momento-corpo {
-  background: white;
-  border: 1px solid rgba(247,217,138,0.3);
-  border-radius: 24px;
-  padding: 26px 30px;
-  flex: 1;
-  transition: var(--trans);
-}
-.momento-corpo:hover {
-  box-shadow: 0 8px 28px rgba(200,146,10,0.08);
-  border-color: rgba(247,217,138,0.5);
-}
-.momento-label {
-  font-family: var(--fonte-titulo);
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--amar-esc);
-  opacity: 0.75;
-  margin-bottom: 6px;
-  display: block;
-}
-.momento-corpo h3 {
-  font-family: var(--fonte-titulo);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--texto);
-  margin-bottom: 10px;
-}
-.momento-corpo p {
-  font-size: 0.88rem;
-  color: var(--texto-suave);
-  line-height: 1.75;
-}
-.momento-corpo p + p { margin-top: 10px; }
-.momento-corpo em { color: var(--amar-esc); font-style: italic; }
-.momento-corpo strong { color: var(--texto); font-weight: 600; }
-
-/* Bloco oceano */
-.oceano-card {
-  background: linear-gradient(145deg, #e8f4fb 0%, #f0f7fd 60%, #faf8f4 100%);
-  border: 1px solid rgba(168,204,232,0.3);
-  border-radius: 56% 44% 54% 46% / 46% 54% 44% 56%;
-  padding: 52px 60px;
-  text-align: center;
-  max-width: 680px;
-  margin: 0 auto 60px;
-  transition: var(--trans);
-}
-.oceano-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(93,138,178,0.1);
-}
-.oceano-label {
-  font-family: var(--fonte-titulo);
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--azul-esc);
-  opacity: 0.65;
-  margin-bottom: 12px;
-  display: block;
-}
-.oceano-titulo {
-  font-family: var(--fonte-titulo);
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--texto);
-  margin-bottom: 16px;
-}
-.oceano-p {
-  font-size: 0.92rem;
-  color: var(--texto-suave);
-  line-height: 1.85;
-  max-width: 500px;
-  margin: 0 auto 24px;
-}
-.analogias-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  max-width: 480px;
-  margin: 0 auto 20px;
-}
-.analogia {
-  background: rgba(255,255,255,0.8);
-  border: 1px solid rgba(168,204,232,0.2);
-  border-radius: 16px;
-  padding: 14px 12px;
-  text-align: center;
-  transition: var(--trans);
-}
-.analogia:hover {
-  border-color: rgba(168,204,232,0.4);
-  transform: translateY(-2px);
-}
-.analogia svg {
-  width: 16px; height: 16px;
-  stroke: var(--azul-mid);
-  opacity: 0.7;
-  margin-bottom: 6px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-.analogia-t {
-  font-family: var(--fonte-titulo);
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--texto);
-  margin-bottom: 4px;
-}
-.analogia-d {
-  font-size: 0.72rem;
-  color: var(--texto-suave);
-  line-height: 1.5;
-}
-.oceano-frase {
-  font-family: var(--fonte-humana);
-  font-size: 1.5rem;
-  color: var(--azul-esc);
-  font-style: italic;
-  opacity: 0.9;
-}
-
-/* Direitos */
-.direitos-intro {
-  text-align: center;
-  margin-bottom: 48px;
-  padding-top: 60px;
-  border-top: 1px solid rgba(247,217,138,0.3);
-}
-.direitos-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 22px;
-  max-width: 1000px;
-  margin: 0 auto 40px;
-}
-.direito-card {
-  background: white;
-  padding: 44px 36px;
-  border: 1px solid rgba(247,217,138,0.25);
-  transition: var(--trans);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.direito-card:nth-child(1) { border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; }
-.direito-card:nth-child(2) { border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
-.direito-card:nth-child(3) { border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; }
-.direito-card:nth-child(4) { border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
-.direito-card:nth-child(5) { border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; }
-.direito-card:nth-child(6) { border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
-.direito-card:hover {
-  transform: translateY(-5px) rotate(0.3deg);
-  box-shadow: 0 14px 36px rgba(200,146,10,0.08);
-  border-color: rgba(247,217,138,0.5);
-}
-.dir-ico-wrap {
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  background: rgba(247,217,138,0.3);
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 16px;
-}
-.dir-ico-wrap svg {
-  width: 20px; height: 20px;
-  stroke: var(--amar-esc);
-  opacity: 0.9;
-}
-.direito-card h3 {
-  font-family: var(--fonte-titulo);
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--texto);
-  margin-bottom: 10px;
-  text-align: center;
-}
-.direito-card p {
-  font-size: 0.83rem;
-  color: var(--texto-suave);
-  line-height: 1.72;
-  margin-bottom: 14px;
-  text-align: center;
-}
-.dir-cit {
-  font-family: var(--fonte-humana);
-  font-size: 1rem;
-  color: var(--amar-esc);
-  font-style: italic;
-  border-top: 1px solid rgba(247,217,138,0.3);
-  padding-top: 12px;
-  opacity: 0.9;
-}
-.nota-legal {
-  background: white;
-  border: 1px solid rgba(247,217,138,0.3);
-  border-radius: 18px;
-  padding: 20px 28px;
-  max-width: 860px;
-  margin: 0 auto;
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-.nota-legal svg {
-  width: 18px; height: 18px;
-  stroke: var(--amar-esc);
-  flex-shrink: 0;
-  margin-top: 2px;
-  opacity: 0.75;
-}
-.nota-legal p {
-  font-size: 0.8rem;
-  color: var(--texto-suave);
-  line-height: 1.65;
-}
-
-/* ═══════════════════════════════
-   04 SEGURANÇA + LISTA — ROXO
-═══════════════════════════════ */
-#seguranca {
-  background: var(--creme);
-}
-
-.selos-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  justify-content: center;
-  margin-bottom: 60px;
-}
-.selo {
-  background: white;
-  border: 1px solid rgba(197,179,232,0.3);
-  border-radius: 16px;
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  min-width: 90px;
-  transition: var(--trans);
-}
-.selo:hover {
-  transform: translateY(-3px);
-  border-color: rgba(126,87,194,0.3);
-  box-shadow: 0 8px 20px rgba(126,87,194,0.07);
-}
-.selo svg {
-  width: 20px; height: 20px;
-  stroke: var(--roxo-esc);
-  opacity: 0.8;
-}
-.selo-nm {
-  font-family: var(--fonte-titulo);
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--texto);
-}
-.selo-sub {
-  font-family: var(--fonte-titulo);
-  font-size: 0.65rem;
-  color: var(--texto-suave);
-}
-
-.seg-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 22px;
-  max-width: 1000px;
-  margin: 0 auto 60px;
-}
-.seg-card {
-  background: white;
-  padding: 44px 36px;
-  border: 1px solid rgba(197,179,232,0.2);
-  transition: var(--trans);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.seg-card:nth-child(1) { border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; }
-.seg-card:nth-child(2) { border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
-.seg-card:nth-child(3) { border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; }
-.seg-card:nth-child(4) { border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
-.seg-card:nth-child(5) { border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; }
-.seg-card:nth-child(6) { border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
-.seg-card:hover {
-  transform: translateY(-5px) rotate(0.3deg);
-  box-shadow: 0 14px 36px rgba(126,87,194,0.08);
-  border-color: rgba(197,179,232,0.4);
-}
-.seg-ico-wrap {
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  background: rgba(197,179,232,0.25);
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 16px;
-}
-.seg-ico-wrap svg {
-  width: 20px; height: 20px;
-  stroke: var(--roxo-esc);
-  opacity: 0.85;
-}
-.seg-card h3 {
-  font-family: var(--fonte-titulo);
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--texto);
-  margin-bottom: 10px;
-  text-align: center;
-}
-.seg-card p {
-  font-size: 0.83rem;
-  color: var(--texto-suave);
-  line-height: 1.72;
-  margin-bottom: 14px;
-  text-align: center;
-}
-.seg-cit {
-  font-family: var(--fonte-humana);
-  font-size: 1rem;
-  color: var(--roxo-esc);
-  font-style: italic;
-  border-top: 1px solid rgba(197,179,232,0.3);
-  padding-top: 12px;
-  opacity: 0.9;
-}
-
-/* Modelo de negócio */
-.mn-card {
-  background: white;
-  border: 1px solid rgba(197,179,232,0.25);
-  border-radius: 28px;
-  padding: 32px 36px;
-  max-width: 760px;
-  margin: 0 auto 70px;
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
-.mn-ico-wrap {
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  background: rgba(197,179,232,0.2);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.mn-ico-wrap svg { width: 22px; height: 22px; stroke: var(--roxo-esc); opacity: 0.85; }
-.mn-titulo {
-  font-family: var(--fonte-titulo);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--texto);
-  margin-bottom: 8px;
-}
-.mn-texto {
-  font-size: 0.88rem;
-  color: var(--texto-suave);
-  line-height: 1.8;
-}
-
-/* Lista de espera */
-.espera-bolha {
-  background: white;
-  border: 1px solid rgba(197,179,232,0.3);
-  border-radius: 60px;
-  padding: 60px;
-  max-width: 640px;
-  margin: 0 auto 50px;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(126,87,194,0.07);
-}
-.espera-topo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 24px;
-}
-.espera-topo svg { width: 18px; height: 18px; stroke: var(--roxo-esc); opacity: 0.7; }
-.espera-label {
-  font-family: var(--fonte-titulo);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--roxo-esc);
-  opacity: 0.75;
-}
-.espera-numero {
-  font-family: var(--fonte-titulo);
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--roxo-esc);
-  display: block;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-.espera-contador-label {
-  font-size: 0.8rem;
-  color: var(--texto-suave);
-  margin-bottom: 28px;
-  display: block;
-}
-.espera-titulo {
-  font-family: var(--fonte-titulo);
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--texto);
-  margin-bottom: 10px;
-  line-height: 1.3;
-}
-.espera-texto {
-  font-size: 0.9rem;
-  color: var(--texto-suave);
-  margin-bottom: 28px;
-  line-height: 1.7;
-}
-.espera-form {
-  display: flex;
-  gap: 10px;
-  max-width: 420px;
-  margin: 0 auto 16px;
-}
-.espera-input {
-  flex: 1;
-  border: 1.5px solid rgba(197,179,232,0.4);
-  border-radius: 50px;
-  padding: 13px 20px;
-  font-family: var(--fonte-titulo);
-  font-size: 0.85rem;
-  color: var(--texto);
-  background: var(--creme);
-  outline: none;
-  transition: var(--trans);
-}
-.espera-input:focus {
-  border-color: var(--roxo-esc);
-  box-shadow: 0 0 0 3px rgba(126,87,194,0.1);
-}
-.espera-input::placeholder { color: #b8c4cc; }
-.espera-btn {
-  background: var(--roxo-esc);
-  color: white;
-  border: none;
-  border-radius: 50px;
-  padding: 13px 22px;
-  font-family: var(--fonte-titulo);
-  font-size: 0.82rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--trans);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-}
-.espera-btn:hover { background: var(--texto); transform: translateY(-2px); }
-.espera-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-.espera-btn svg { width: 14px; height: 14px; stroke: white; }
-.espera-feedback {
-  font-size: 0.82rem;
-  min-height: 18px;
-  text-align: center;
-}
-.espera-feedback.sucesso { color: #3a7e5c; }
-.espera-feedback.erro { color: #c95b5b; }
-.espera-privacidade {
-  font-size: 0.72rem;
-  color: #bbb;
-  margin-top: 12px;
-}
-.espera-manuscrito {
-  font-family: var(--fonte-humana);
-  font-size: 1.5rem;
-  color: var(--roxo-esc);
-  display: block;
-  margin-top: 18px;
-  opacity: 0.8;
-}
-
-/* Instagram CTA */
-.insta-card {
-  background: white;
-  border: 1px solid rgba(197,179,232,0.2);
-  border-radius: 28px;
-  padding: 40px;
-  max-width: 560px;
-  margin: 0 auto;
-  text-align: center;
-}
-.insta-card svg { width: 28px; height: 28px; stroke: var(--roxo-esc); margin-bottom: 12px; opacity: 0.8; }
-.insta-card h3 {
-  font-family: var(--fonte-titulo);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--texto);
-  margin-bottom: 10px;
-}
-.insta-card p {
-  font-size: 0.88rem;
-  color: var(--texto-suave);
-  line-height: 1.75;
-  margin-bottom: 24px;
-}
-.btn-insta {
-  background: var(--roxo-esc);
-  color: white;
-  border-radius: 50px;
-  padding: 12px 24px;
-  font-family: var(--fonte-titulo);
-  font-size: 0.82rem;
-  font-weight: 700;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: var(--trans);
-}
-.btn-insta:hover { background: var(--texto); transform: translateY(-2px); }
-.btn-insta svg { width: 15px; height: 15px; stroke: white; }
-
-/* ── Botão e formulário de relato ── */
-.btn-relato-abrir {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: none;
-  border: 1.5px solid rgba(93,138,178,0.35);
-  border-radius: 50px;
-  padding: 11px 24px;
-  font-family: var(--fonte-titulo);
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--azul-esc);
-  cursor: pointer;
-  transition: var(--trans);
-  margin-top: 24px;
-}
-.btn-relato-abrir:hover {
-  background: rgba(168,204,232,0.15);
-  border-color: var(--azul-esc);
-  transform: translateY(-2px);
-}
-.form-relato-wrap {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease, margin 0.4s ease;
-  margin-top: 0;
-}
-.form-relato-wrap.aberto {
-  max-height: 340px;
-  opacity: 1;
-  margin-top: 20px;
-}
-.form-relato {
-  background: white;
-  border: 1px solid rgba(93,138,178,0.15);
-  border-radius: 24px;
-  padding: 28px 32px;
-  max-width: 480px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  text-align: left;
-}
-.form-relato-label {
-  font-family: var(--fonte-titulo);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--azul-esc);
-  opacity: 0.75;
-}
-.form-relato textarea {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid rgba(93,138,178,0.25);
-  border-radius: 14px;
-  font-family: var(--fonte-corpo);
-  font-size: 0.85rem;
-  color: var(--texto);
-  resize: none;
-  height: 90px;
-  outline: none;
-  background: var(--creme);
-  transition: border-color 0.3s ease;
-  line-height: 1.6;
-}
-.form-relato textarea:focus { border-color: var(--azul-esc); box-shadow: 0 0 0 3px rgba(93,138,178,0.08); }
-.form-relato textarea::placeholder { color: #b8c8d8; }
-.form-relato input {
-  width: 100%;
-  padding: 10px 16px;
-  border: 1px solid rgba(93,138,178,0.25);
-  border-radius: 50px;
-  font-family: var(--fonte-corpo);
-  font-size: 0.82rem;
-  color: var(--texto);
-  outline: none;
-  background: var(--creme);
-  transition: border-color 0.3s ease;
-}
-.form-relato input:focus { border-color: var(--azul-esc); box-shadow: 0 0 0 3px rgba(93,138,178,0.08); }
-.form-relato input::placeholder { color: #b8c8d8; }
-.form-relato-rodape {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.form-relato-nota { font-size: 0.7rem; color: #aab8c4; line-height: 1.4; }
-.btn-relato-enviar {
-  padding: 9px 22px;
-  border-radius: 50px;
-  border: none;
-  background: var(--azul-esc);
-  color: white;
-  font-family: var(--fonte-titulo);
-  font-size: 0.78rem;
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: var(--trans);
-  flex-shrink: 0;
-}
-.btn-relato-enviar:hover { background: var(--texto); transform: translateY(-2px); }
-.btn-relato-enviar:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-.form-relato-feedback { font-size: 0.8rem; text-align: center; min-height: 18px; transition: all 0.3s; }
-.form-relato-feedback.sucesso { color: #3a7e5c; }
-.form-relato-feedback.erro    { color: #c95b5b; }
-
-footer {
-  background: var(--creme);
-  border-top: 1px solid rgba(168,204,232,0.2);
-  padding: 28px 5%;
-  text-align: center;
-}
-footer p {
-  font-size: 0.78rem;
-  color: #bbb;
-  font-family: var(--fonte-titulo);
-}
-
-/* ═══════════════════════════════
-   RESPONSIVO
-═══════════════════════════════ */
-@media (max-width: 900px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-visual { display: none; }
-  .permissoes-grid { grid-template-columns: 1fr; max-width: 380px; margin-left: auto; margin-right: auto; }
-  .pilares-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
-  .direitos-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
-  .seg-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
-  .analogias-grid { grid-template-columns: 1fr 1fr; }
-  .oceano-card { padding: 40px 30px; }
-  .mn-card { flex-direction: column; }
-  .espera-form { flex-direction: column; }
-  .espera-bolha { padding: 40px 28px; }
-  .nav-links { gap: 2px; }
-}
-@media (max-width: 600px) {
-  .sec-h2 { font-size: 1.7rem; }
-  .hero-h1 { font-size: 1.8rem; }
-  .oceano-card { border-radius: 24px; }
-  .caixa-cit { border-radius: 24px; padding: 28px 24px; }
-  .timeline::before { display: none; }
-  .momento { flex-direction: column; }
-  .nav-nome .n1 { font-size: 12px; }
-  .nav-ico { width: 34px; height: 34px; }
-  .selos-wrap { gap: 8px; }
-  .direitos-grid { grid-template-columns: 1fr; }
+/* ═══ RESPONSIVO ═══ */
+@media (max-width:900px) {
+  .hero-grid { grid-template-columns:1fr; }
+  .hero-visual { display:none; }
+  .pilar-grid { grid-template-columns:1fr; gap:40px; }
+  .pilar-grid.reverse { direction:ltr; }
+  .pilar-phone { order:-1; }
+  .como-grid { grid-template-columns:1fr; max-width:400px; margin-left:auto; margin-right:auto; }
+  .cta-espera { padding:36px 24px; }
+  .cta-form { flex-direction:column; }
+}
+@media (max-width:600px) {
+  .hero-h1 { font-size:1.8rem; }
+  .pilar-h2 { font-size:1.6rem; }
+  nav { padding:0 4%; }
+  .nav-ico { width:36px; height:36px; }
+  .phone-frame { width:220px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════
-     HEADER FIXO
-═══════════════════════════ -->
+<!-- ═══ NAV ═══ -->
 <header>
   <nav>
-    <a href="#inicio" class="nav-logo">
+    <a href="#semente" class="nav-logo">
       <svg width="24" height="30" viewBox="44 40 130 180" overflow="visible">
         <path d="M54 164 C48 148 46 130 46 112 C46 72 74 42 108 42 C142 42 170 72 170 112 C170 130 168 148 162 164 C156 178 148 188 138 194" stroke="#a8cce8" stroke-width="2.8" fill="none" stroke-linecap="round"/>
         <path d="M62 174 C55 157 52 138 52 118 C52 80 77 52 108 52 C139 52 164 80 164 118 C164 138 161 157 154 174 C148 188 140 198 130 204" stroke="#8fbedd" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-        <path d="M70 182 C63 164 60 144 60 122 C60 86 81 60 108 60 C135 60 156 86 156 122 C156 144 153 164 146 182 C140 196 132 206 122 211" stroke="#75afd2" stroke-width="2.0" fill="none" stroke-linecap="round"/>
-        <path d="M78 188 C72 170 69 150 69 128 C69 94 87 69 108 69 C129 69 147 94 147 128 C147 150 144 170 138 188 C132 202 124 211 114 215" stroke="#5ca0c7" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-        <path d="M86 192 C81 174 78 154 78 132 C78 100 92 78 108 78 C124 78 138 100 138 132 C138 154 136 174 130 192 C124 205 116 213 108 216 C100 213 92 205 86 192 Z" stroke="#4492bc" stroke-width="1.4" fill="none"/>
-        <path d="M94 188 C90 172 87 154 87 134 C87 104 96 84 108 84 C120 84 129 104 129 134 C129 154 127 172 122 188 C117 200 112 207 108 209 C104 207 99 200 94 188 Z" stroke="#2d83b0" stroke-width="1.2" fill="none"/>
+        <path d="M70 182 C63 164 60 144 60 122 C60 86 81 60 108 60 C135 60 156 86 156 122 C156 144 153 164 146 182 C140 196 132 206 122 211" stroke="#5ca0c7" stroke-width="2.0" fill="none" stroke-linecap="round"/>
+        <path d="M86 192 C81 174 78 154 78 132 C78 100 92 78 108 78 C124 78 138 100 138 132 C138 154 136 174 130 192 C124 205 116 213 108 216 C100 213 92 205 86 192 Z" stroke="#4492bc" stroke-width="1.5" fill="none"/>
+        <path d="M102 182 C99 168 97 152 97 134 C97 110 101 92 108 92 C115 92 119 110 119 134 C119 152 117 168 114 182 C111 192 109 198 108 200 C107 197 105 191 102 182 Z" stroke="#1e74a4" stroke-width="1.2" fill="none"/>
         <path d="M106 170 C104 158 103 144 103 130 C103 114 105 102 108 100 C111 102 113 114 113 130 C113 144 112 158 110 170 C109 178 108 183 108 183 C108 180 107 175 106 170 Z" stroke="#145e8c" stroke-width="1.0" fill="none"/>
       </svg>
-      <div class="nav-nome">
-        <span class="n1">LEGADO</span>
-        <span class="n2">AZUL</span>
-      </div>
+      <div class="nav-nome"><span class="n1">LEGADO</span><span class="n2">AZUL</span></div>
     </a>
     <div class="nav-links">
-      <a href="#inicio" class="nav-ico ativo" data-tip="Início & Pausa">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2"/><path d="M12.59 19.41A2 2 0 1 0 14 16H2"/><path d="M17.73 7.73A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+      <a href="#semente"  class="nav-ico ativo" data-tip="Início"   data-cor="azul">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M12 22V12"/><path d="M12 12C12 7 7 4 3 6"/><path d="M12 12C12 7 17 4 21 6"/></svg>
       </a>
-      <a href="#metodologia" class="nav-ico" data-tip="Metodologia">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      <a href="#educacao" class="nav-ico" data-tip="Educação"  data-cor="azul">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
       </a>
-      <a href="#historia" class="nav-ico" data-tip="História & Direitos">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M12 12C12 7 7 4 3 6"/><path d="M12 12C12 7 17 4 21 6"/></svg>
+      <a href="#familia"  class="nav-ico" data-tip="Família"   data-cor="verde">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </a>
-      <a href="#seguranca" class="nav-ico" data-tip="Segurança & Lista">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <a href="#saude"    class="nav-ico" data-tip="Saúde"     data-cor="amarelo">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>
+      </a>
+      <a href="#terapia"  class="nav-ico" data-tip="Terapia"   data-cor="roxo">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
       </a>
     </div>
   </nav>
 </header>
 
-<!-- ═══════════════════════════
-     01 — INÍCIO + PAUSA (AZUL)
-═══════════════════════════ -->
-<section id="inicio">
-
-  <!-- Ondas de fundo azuis -->
-  <svg class="ondas-bg" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="height:320px;">
-    <path d="M0,160 C180,220 360,80 540,140 C720,200 900,260 1080,200 C1260,140 1380,80 1440,100 L1440,320 L0,320 Z" fill="#a8cce8" opacity="0.30"/>
-    <path d="M0,210 C200,160 400,240 600,200 C800,160 1000,220 1200,190 C1320,175 1400,200 1440,210 L1440,320 L0,320 Z" fill="#5ca0c7" opacity="0.20"/>
-    <path d="M0,250 C240,220 480,270 720,245 C960,220 1200,255 1440,240 L1440,320 L0,320 Z" fill="#2d83b0" opacity="0.15"/>
+<!-- ════════════════════════════════
+     🌱 SEMENTE
+════════════════════════════════ -->
+<section id="semente">
+  <svg class="ondas-bg" viewBox="0 0 1440 320" preserveAspectRatio="none" style="height:320px;">
+    <path d="M0,160 C180,220 360,80 540,140 C720,200 900,260 1080,200 C1260,140 1380,80 1440,100 L1440,320 L0,320 Z" fill="#a8cce8" opacity="0.28"/>
+    <path d="M0,210 C200,160 400,240 600,200 C800,160 1000,220 1200,190 C1400,160 1440,210 1440,210 L1440,320 L0,320 Z" fill="#5ca0c7" opacity="0.18"/>
+    <path d="M0,250 C240,220 480,270 720,245 C960,220 1200,255 1440,240 L1440,320 L0,320 Z" fill="#2d83b0" opacity="0.12"/>
   </svg>
-
   <div class="sec-inner">
-
-    <!-- Hero -->
     <div class="hero-grid">
       <div>
         <span class="hero-label">Legado Azul · App em desenvolvimento</span>
-        <h1 class="hero-h1">O app que guarda a história de quem você mais ama.</h1>
-        <span class="hero-manuscrito">para famílias de mentes únicas.</span>
-        <p class="hero-p">Sabemos que o diagnóstico muitas vezes chega como um impacto. O Legado Azul é o sistema que reúne terapias, escola, direitos e a história da pessoa que você ama — num único lugar, organizado com cuidado, protegido com segurança.</p>
+        <h1 class="hero-h1">O app que guarda a história<br>de quem você mais ama.</h1>
+        <span class="hero-ms">para famílias de mentes únicas.</span>
+        <p class="hero-p">Sabemos que o diagnóstico muitas vezes chega como um impacto. O Legado Azul organiza terapias, escola, saúde e a história da pessoa que você ama — tudo num único lugar, seguro e sempre à mão.</p>
         <div class="hero-btns">
-          <a href="#seguranca" class="btn-pri">
+          <a href="#terapia" class="btn-pri">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
             Reservar meu lugar
           </a>
-          <a href="#metodologia" class="btn-sec">Conhecer o projeto</a>
+          <a href="#educacao" class="btn-sec">Conhecer o app</a>
         </div>
       </div>
       <div class="hero-visual">
         <div class="hero-digital-wrap">
-          <svg width="260" height="320" viewBox="44 40 130 180" overflow="visible">
+          <svg width="280" height="340" viewBox="44 40 130 180" overflow="visible">
             <path d="M54 164 C48 148 46 130 46 112 C46 72 74 42 108 42 C142 42 170 72 170 112 C170 130 168 148 162 164 C156 178 148 188 138 194" stroke="#a8cce8" stroke-width="1.9" fill="none" stroke-linecap="round"/>
             <path d="M62 174 C55 157 52 138 52 118 C52 80 77 52 108 52 C139 52 164 80 164 118 C164 138 161 157 154 174 C148 188 140 198 130 204" stroke="#8fbedd" stroke-width="1.8" fill="none" stroke-linecap="round"/>
             <path d="M70 182 C63 164 60 144 60 122 C60 86 81 60 108 60 C135 60 156 86 156 122 C156 144 153 164 146 182 C140 196 132 206 122 211" stroke="#75afd2" stroke-width="1.7" fill="none" stroke-linecap="round"/>
@@ -1419,406 +238,300 @@ footer p {
             <path d="M102 182 C99 168 97 152 97 134 C97 110 101 92 108 92 C115 92 119 110 119 134 C119 152 117 168 114 182 C111 192 109 198 108 200 C107 197 105 191 102 182 Z" stroke="#1e74a4" stroke-width="1.3" fill="none"/>
             <path d="M106 170 C104 158 103 144 103 130 C103 114 105 102 108 100 C111 102 113 114 113 130 C113 144 112 158 110 170 C109 178 108 183 108 183 C108 180 107 175 106 170 Z" stroke="#145e8c" stroke-width="1.2" fill="none"/>
           </svg>
-          <div class="hero-tag tag-1" style="color:#2d83b0;border-color:rgba(168,204,232,0.5)">🎓 Educação</div>
-          <div class="hero-tag tag-2" style="color:#3a9e72;border-color:rgba(157,213,187,0.5)">💚 Família</div>
-          <div class="hero-tag tag-3" style="color:#c8920a;border-color:rgba(247,217,138,0.5)">🩺 Saúde</div>
-          <div class="hero-tag tag-4" style="color:#7e57c2;border-color:rgba(197,179,232,0.5)">🧠 Terapia</div>
+          <div class="hero-tag tag-1" style="color:#2d83b0;border-color:rgba(168,204,232,.5)">🎓 Educação</div>
+          <div class="hero-tag tag-2" style="color:#3a9e72;border-color:rgba(157,213,187,.5)">💚 Família</div>
+          <div class="hero-tag tag-3" style="color:#c8920a;border-color:rgba(247,217,138,.5)">🩺 Saúde</div>
+          <div class="hero-tag tag-4" style="color:#7e57c2;border-color:rgba(197,179,232,.5)">🧠 Terapia</div>
         </div>
       </div>
     </div>
 
-    <!-- Pausa -->
-    <div class="pausa-wrap">
-      <div class="pausa-centro">
-        <p class="pausa-titulo">Se o mundo parece barulhento agora...</p>
-        <span class="pausa-manuscrito">aqui você pode silenciar.</span>
+    <div class="como-grid">
+      <div class="como-card">
+        <span class="como-num">01</span>
+        <h4>Registre tudo em um lugar</h4>
+        <p>Consultas, terapias, conquistas, laudos e rotinas — organizados por pilar, acessíveis sempre.</p>
+      </div>
+      <div class="como-card">
+        <span class="como-num">02</span>
+        <h4>Compartilhe com quem cuida</h4>
+        <p>Gere um PIN seguro para terapeutas, médicos e educadores acessarem só o que precisam.</p>
+      </div>
+      <div class="como-card">
+        <span class="como-num">03</span>
+        <h4>O legado cresce com a pessoa</h4>
+        <p>Cada registro de hoje é um dado valioso para o futuro. O histórico nunca se perde.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <div class="circulo-resp" aria-label="Animação de respiração">
-          <span>inspire... expire</span>
+<!-- ════════════════════════════════
+     🎓 EDUCAÇÃO
+════════════════════════════════ -->
+<section id="educacao" class="pilar-sec">
+  <svg class="ondas-topo" viewBox="0 0 1440 180" preserveAspectRatio="none" style="height:180px;">
+    <path d="M0,80 C240,140 480,20 720,80 C960,140 1200,60 1440,90 L1440,0 L0,0 Z" fill="#a8cce8" opacity="0.32"/>
+    <path d="M0,110 C200,60 440,130 680,100 C920,70 1160,120 1440,95 L1440,0 L0,0 Z" fill="#2d83b0" opacity="0.18"/>
+  </svg>
+  <svg class="ondas-bg" viewBox="0 0 1440 200" preserveAspectRatio="none" style="height:200px;">
+    <path d="M0,100 C360,40 720,160 1080,100 C1260,70 1380,110 1440,90 L1440,200 L0,200 Z" fill="#a8cce8" opacity="0.25"/>
+    <path d="M0,140 C300,90 600,160 900,130 C1100,110 1300,145 1440,130 L1440,200 L0,200 Z" fill="#2d83b0" opacity="0.14"/>
+  </svg>
+  <div class="sec-inner" style="padding-top:160px;">
+    <div class="pilar-grid">
+      <div>
+        <span class="pilar-tag" style="color:var(--azul-esc)">🎓 Pilar 1 — Educação</span>
+        <h2 class="pilar-h2">Desenvolvimento<br>e Aprendizado</h2>
+        <span class="pilar-ms" style="color:var(--azul-esc)">o mapa do aprendizado.</span>
+        <p class="pilar-p">O aprendizado acontece em muitos lugares — dentro e fora da escola. Registre a trajetória completa: seja em escola formal, ensino adaptado ou fora da escola.</p>
+        <div class="recursos-lista">
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(168,204,232,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#2d83b0" stroke-width="1.8" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+            <div><div class="rec-nm">Escolas e Instituições</div><div class="rec-sub">Histórico completo de vínculos, tipo de escola, período e recursos disponibilizados</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(168,204,232,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#2d83b0" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+            <div><div class="rec-nm">Mediadores e Professores</div><div class="rec-sub">Nomes, contatos, funções e observações de cada profissional</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(168,204,232,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#2d83b0" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+            <div><div class="rec-nm">PEI — Plano de Ensino Individualizado</div><div class="rec-sub">Planos por ano letivo com metas, áreas e resultados alcançados</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(168,204,232,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#2d83b0" stroke-width="1.8" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div><div class="rec-nm">Conquistas e Marcos</div><div class="rec-sub">Cada pequena vitória com data, contexto e quem estava presente</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(168,204,232,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#2d83b0" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+            <div><div class="rec-nm">Ocorrências e Comunicados</div><div class="rec-sub">Registro de episódios, comunicações da escola e encaminhamentos</div></div>
+          </div>
         </div>
-
-        <div class="caixa-cit">
-          <p class="cit-texto">"O choro não é falta de força, é o transbordar de um amor que está se recalculando."</p>
-          <p class="cit-nota">Respire. O diagnóstico não muda quem seu filho é.</p>
-        </div>
-
-        <div class="permissoes-grid">
-          <div class="perm-card">
-            <svg class="perm-ico" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-            <h5>Você pode chorar</h5>
-            <p>O choro não é fraqueza. É o seu corpo processando um amor enorme. Deixe sair.</p>
-          </div>
-          <div class="perm-card">
-            <svg class="perm-ico" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
-            <h5>Você pode parar</h5>
-            <p>Não há nada que precise ser resolvido agora. Este momento é só seu.</p>
-          </div>
-          <div class="perm-card">
-            <svg class="perm-ico" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            <h5>Você pode sentir tudo</h5>
-            <p>Medo, alívio, confusão, amor. Tudo ao mesmo tempo. Isso é humano.</p>
-          </div>
-        </div>
-
-        <div class="varal-wrap">
-          <h3 class="varal-titulo">Você não está caminhando só</h3>
-          <p class="varal-intro">Muitos passaram por aqui e deixaram um pouco de sua força:</p>
-          <div class="balao-unico">
-            <p>"Criei o Legado Azul para que nenhuma família precise começar do zero."</p>
-            <span class="autor">— Fundadora do Legado Azul</span>
-          </div>
-
-          <!-- Botão + formulário de relato -->
-          <button class="btn-relato-abrir" id="btn-abrir-form" onclick="toggleFormRelato()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            Deixar meu relato
-          </button>
-
-          <div class="form-relato-wrap" id="form-relato-wrap">
-            <div class="form-relato">
-              <label class="form-relato-label">Sua mensagem</label>
-              <textarea id="relato-texto" placeholder="Compartilhe um pensamento, uma palavra de força ou o que você gostaria de ter ouvido no começo da sua jornada..." maxlength="200"></textarea>
-              <input type="text" id="relato-autor" placeholder="Como quer ser identificado(a)? Ex: Mãe do João, Relato anônimo..." maxlength="50">
-              <div class="form-relato-rodape">
-                <span class="form-relato-nota">Seu relato aparecerá após aprovação.<br>Obrigada por compartilhar.</span>
-                <button class="btn-relato-enviar" id="btn-enviar-relato" onclick="enviarRelato()">Compartilhar</button>
+      </div>
+      <div class="pilar-phone">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="pm">
+              <div class="pm-header">
+                <div class="pm-back" style="background:rgba(45,131,176,.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#2d83b0" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></div>
+                <span class="pm-title">Desenvolvimento e Aprendizado</span>
               </div>
-              <p class="form-relato-feedback" id="relato-feedback"></p>
+              <div class="pm-banner" style="background:#5ca0c7"><p>O aprendizado acontece em muitos lugares. Registre a trajetória — escola, casa ou terapias.</p></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#5ca0c7"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><div style="flex:1"><div class="pm-card-nm">Escolas e Instituições</div><div class="pm-card-sub">Histórico de vínculos escolares</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#5ca0c7"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div style="flex:1"><div class="pm-card-nm">Mediadores e Professores</div><div class="pm-card-sub">Nomes, contatos e observações</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#5ca0c7"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div><div style="flex:1"><div class="pm-card-nm">PEI — Plano de Ensino</div><div class="pm-card-sub">Planos individualizados por ano</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#5ca0c7"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div style="flex:1"><div class="pm-card-nm">Conquistas e Marcos</div><div class="pm-card-sub">Evoluções registradas</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#5ca0c7"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg></div><div style="flex:1"><div class="pm-card-nm">Ocorrências</div><div class="pm-card-sub">Registros e comunicados</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
             </div>
           </div>
         </div>
-
       </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══════════════════════════
-     02 — METODOLOGIA (VERDE)
-═══════════════════════════ -->
-<section id="metodologia">
-
-  <svg class="ondas-topo" viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="height:180px;">
-    <path d="M0,80 C240,140 480,20 720,80 C960,140 1200,60 1440,90 L1440,0 L0,0 Z" fill="#9dd5bb" opacity="0.32"/>
-    <path d="M0,110 C200,60 440,130 680,100 C920,70 1160,120 1440,95 L1440,0 L0,0 Z" fill="#3a9e72" opacity="0.18"/>
-  </svg>
-
-  <svg class="ondas-bg" viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="height:200px;">
-    <path d="M0,100 C360,40 720,160 1080,100 C1260,70 1380,110 1440,90 L1440,200 L0,200 Z" fill="#9dd5bb" opacity="0.28"/>
-    <path d="M0,140 C300,90 600,160 900,130 C1100,110 1300,145 1440,130 L1440,200 L0,200 Z" fill="#3a9e72" opacity="0.16"/>
-  </svg>
-
-  <div class="sec-inner">
-    <div class="sec-header">
-      <span class="sec-label" style="color:var(--verde-esc)">Nossa metodologia</span>
-      <h2 class="sec-h2">Tudo conectado, nada perdido.</h2>
-      <span class="sec-manuscrito" style="color:var(--verde-esc)">essa é a nossa metodologia.</span>
-      <p class="sec-p">O Legado Azul é o ponto de convergência de informações reais para uma visão completa da jornada de quem você ama. Quatro pilares. Um histórico. Uma família mais segura.</p>
-    </div>
-
-    <div style="text-align:center">
-    <div class="bolha-4pilares">
-      <div class="mini-pilar">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-        <span>Educação</span>
-      </div>
-      <div class="mini-pilar">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span>Família</span>
-      </div>
-      <div class="mini-pilar">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>
-        <span>Saúde</span>
-      </div>
-      <div class="mini-pilar">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
-        <span>Terapia</span>
-      </div>
-    </div>
-    </div>
-
-    <div class="pilares-grid">
-      <article class="pilar-card">
-        <div class="pilar-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
-        <h3>Desenvolvimento e Aprendizado</h3>
-        <span class="pilar-sub">O mapa do aprendizado</span>
-        <p>O aprendizado acontece em muitos lugares — dentro e fora da escola. Registramos escolas, mediadores, PEIs e adaptações. Cada conquista, seja qual for o contexto, é um dado valioso para o futuro.</p>
-        <span class="pilar-cit">"Não registramos apenas o que foi ensinado,<br>mas como o mundo foi descoberto."</span>
-      </article>
-      <article class="pilar-card">
-        <div class="pilar-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-        <h3>Memórias e Valores</h3>
-        <span class="pilar-sub">A memória compartilhada</span>
-        <p>Árvore de cuidados, contatos de emergência e histórico de convivência. É o espaço onde o afeto encontra a organização — rotina, alimentação, cuidados do dia a dia, tudo preservado com carinho.</p>
-        <span class="pilar-cit">"A história de uma família é<br>o porto seguro de qualquer jornada."</span>
-      </article>
-      <article class="pilar-card">
-        <div class="pilar-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg></div>
-        <h3>Dossiê de Saúde</h3>
-        <span class="pilar-sub">A gestão clínica integrada</span>
-        <p>Registre especialistas, clínicas e hospitais. Chegue em cada consulta com o histórico completo na mão — sem repetir o começo da história, sem perder informações cruciais espalhadas em prontuários.</p>
-        <span class="pilar-cit">"Saúde é organização que gera<br>paz de espírito para o futuro."</span>
-      </article>
-      <article class="pilar-card">
-        <div class="pilar-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div>
-        <h3>Evolução Terapêutica</h3>
-        <span class="pilar-sub">A rastreabilidade da evolução</span>
-        <p>Documentamos a rede multidisciplinar. Quais metodologias foram aplicadas, por quais profissionais. Cada avanço fica registrado — transformando atendimentos isolados num banco de dados contínuo.</p>
-        <span class="pilar-cit">"O que parece pequeno hoje é<br>o grande legado de amanhã."</span>
-      </article>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════
-     03 — HISTÓRIA + DIREITOS (AMARELO)
-═══════════════════════════ -->
-<section id="historia">
-
-  <svg class="ondas-topo" viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="height:180px;">
-    <path d="M0,90 C360,150 720,30 1080,90 C1260,120 1380,70 1440,80 L1440,0 L0,0 Z" fill="#f7d98a" opacity="0.38"/>
-    <path d="M0,120 C280,65 560,145 840,110 C1080,82 1280,130 1440,105 L1440,0 L0,0 Z" fill="#c8920a" opacity="0.18"/>
+<!-- ════════════════════════════════
+     💚 FAMÍLIA
+════════════════════════════════ -->
+<section id="familia" class="pilar-sec">
+  <svg class="ondas-topo" viewBox="0 0 1440 180" preserveAspectRatio="none" style="height:180px;">
+    <path d="M0,90 C360,150 720,30 1080,90 C1260,120 1380,60 1440,80 L1440,0 L0,0 Z" fill="#9dd5bb" opacity="0.38"/>
+    <path d="M0,120 C280,65 560,145 840,110 C1080,78 1280,128 1440,100 L1440,0 L0,0 Z" fill="#3a9e72" opacity="0.20"/>
   </svg>
-
-  <svg class="ondas-bg" viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="height:200px;">
-    <path d="M0,80 C300,140 600,40 900,100 C1100,140 1300,80 1440,100 L1440,200 L0,200 Z" fill="#f7d98a" opacity="0.30"/>
-    <path d="M0,130 C240,90 500,155 760,125 C1000,95 1220,145 1440,120 L1440,200 L0,200 Z" fill="#c8920a" opacity="0.15"/>
+  <svg class="ondas-bg" viewBox="0 0 1440 200" preserveAspectRatio="none" style="height:200px;">
+    <path d="M0,80 C300,140 600,40 900,100 C1100,140 1300,80 1440,100 L1440,200 L0,200 Z" fill="#9dd5bb" opacity="0.28"/>
+    <path d="M0,130 C240,90 500,155 760,125 C1000,95 1220,145 1440,120 L1440,200 L0,200 Z" fill="#3a9e72" opacity="0.15"/>
   </svg>
-
   <div class="sec-inner" style="padding-top:160px;">
-    <div class="sec-header">
-      <span class="sec-label" style="color:var(--amar-esc)">Nossa história & seus direitos</span>
-      <h2 class="sec-h2">Toda semente começa no escuro.</h2>
-      <span class="sec-manuscrito" style="color:var(--amar-esc)">essa é a nossa história.</span>
-      <p class="sec-p">O Legado Azul não nasceu em um escritório. Nasceu numa noite de diagnóstico, numa sala de espera, no silêncio que vem depois de uma palavra que muda tudo.</p>
-    </div>
-
-    <!-- Timeline -->
-    <div class="timeline">
-      <div class="momento">
-        <div class="momento-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-        <div class="momento-corpo">
-          <span class="momento-label">O começo</span>
-          <h3>O diagnóstico chegou.</h3>
-          <p>Sou mãe de uma criança autista. Quando o laudo chegou, a primeira sensação não foi de clareza — foi de isolamento. Eu sabia que precisava de terapias, de escola, de direitos, de uma rede de apoio. Mas cada um desses pilares existia num mundo separado.</p>
-          <p>Faltava um lugar que reunisse tudo. Faltava um sistema que me ajudasse a enxergar o todo.</p>
+    <div class="pilar-grid reverse">
+      <div class="pilar-phone">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="pm">
+              <div class="pm-header">
+                <div class="pm-back" style="background:rgba(58,158,114,.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#3a9e72" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></div>
+                <span class="pm-title">Memórias e Valores</span>
+              </div>
+              <div class="pm-banner" style="background:#3a9e72"><p>O espaço onde o afeto encontra a organização. Rotina, alimentação, cuidados e rede de apoio.</p></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#3a9e72"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></div><div style="flex:1"><div class="pm-card-nm">Alimentação e Afeto</div><div class="pm-card-sub">Preferências, rituais e conforto</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#3a9e72"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div style="flex:1"><div class="pm-card-nm">Autonomia e Rotina</div><div class="pm-card-sub">Higiene, horários e independência</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#3a9e72"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div style="flex:1"><div class="pm-card-nm">Comunicação e Comportamento</div><div class="pm-card-sub">Sinais, vocabulário e acalmar</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#3a9e72"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div style="flex:1"><div class="pm-card-nm">Interesses e Conforto</div><div class="pm-card-sub">O que ama, acalma e faz sorrir</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#3a9e72"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12"/></svg></div><div style="flex:1"><div class="pm-card-nm">Rede de Apoio</div><div class="pm-card-sub">Contatos de confiança e emergência</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="momento">
-        <div class="momento-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
-        <div class="momento-corpo">
-          <span class="momento-label">A descoberta</span>
-          <h3>Uma tese que virou propósito.</h3>
-          <p>Na pós-graduação em <strong>Ciência de Dados e Analytics</strong>, me deparei com uma pergunta: <em>e se os dados pudessem contar a história de desenvolvimento de cada pessoa de forma integrada?</em></p>
-          <p>A tese confirmou o que o coração já sabia — a fragmentação de informações entre educação, família, saúde e terapia cria lacunas que prejudicam o desenvolvimento de cada pessoa.</p>
-        </div>
-      </div>
-      <div class="momento">
-        <div class="momento-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <div class="momento-corpo">
-          <span class="momento-label">A virada</span>
-          <h3>O histórico que muda tudo.</h3>
-          <p>Cada registro feito hoje se torna um dado valioso para o futuro. Consultas, conquistas, terapias, episódios, adaptações escolares — tudo reunido num histórico que cresce com a pessoa.</p>
-          <p>Esse banco de dados pessoal é memória. É continuidade. É a diferença entre chegar numa consulta com a história toda, ou começar sempre do zero.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Oceano -->
-    <div class="oceano-card">
-      <span class="oceano-label">A origem do nome</span>
-      <h3 class="oceano-titulo">Por que Legado Azul?</h3>
-      <p class="oceano-p">O oceano é a metáfora mais precisa para a mente neurodivergente. O que a sociedade vê é apenas a superfície. Abaixo existe um ecossistema inteiro de processamento sensorial e formas únicas de pensar.</p>
-      <div class="analogias-grid">
-        <div class="analogia">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
-          <div class="analogia-t">Superfície × Profundeza</div>
-          <div class="analogia-d">O que se vê é fração do que existe dentro.</div>
-        </div>
-        <div class="analogia">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-          <div class="analogia-t">O desconhecido</div>
-          <div class="analogia-d">Cada mente é um oceano novo a descobrir.</div>
-        </div>
-        <div class="analogia">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          <div class="analogia-t">Força e fragilidade</div>
-          <div class="analogia-d">Calma e marés — resiliência e sensibilidade.</div>
-        </div>
-        <div class="analogia">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m4.93 4.93 14.14 14.14"/></svg>
-          <div class="analogia-t">Infinitas formas de ser</div>
-          <div class="analogia-d">O oceano não julga como se nada.</div>
-        </div>
-      </div>
-      <span class="oceano-frase">"cada mente é um oceano —<br>profundo, único e ainda por descobrir."</span>
-    </div>
-
-    <!-- Direitos -->
-    <div class="direitos-intro">
-      <span class="sec-label" style="color:var(--amar-esc)">Conhecimento é proteção</span>
-      <h2 class="sec-h2" style="font-size:clamp(1.5rem,2.5vw,2rem)">e você merece saber de tudo isso.</h2>
-      <p class="sec-p" style="margin-top:12px">A lei brasileira garante direitos importantes para pessoas com deficiência e suas famílias. Reunimos aqui o essencial — sem juridiquês, sem complicação.</p>
-    </div>
-
-    <div class="direitos-grid">
-      <article class="direito-card">
-        <div class="dir-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
-        <h3>Direito à Educação</h3>
-        <p>Toda instituição — pública ou particular — é obrigada a oferecer acessibilidade, adaptação curricular e apoio especializado. Esses serviços não podem ser cobrados à parte.</p>
-        <span class="dir-cit">"A educação inclusiva é um direito fundamental, não uma concessão."</span>
-      </article>
-      <article class="direito-card">
-        <div class="dir-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <h3>Benefícios Sociais</h3>
-        <p>O BPC (LOAS) garante um salário mínimo mensal para pessoas com deficiência em situação de vulnerabilidade socioeconômica. Organize a documentação para a perícia do INSS.</p>
-        <span class="dir-cit">"O amparo social é a base para a estabilidade da jornada."</span>
-      </article>
-      <article class="direito-card">
-        <div class="dir-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
-        <h3>Isenções e Mobilidade</h3>
-        <p>Isenções de IPI e ICMS na compra de veículos adaptados, cartão de estacionamento em vagas especiais e passe livre no transporte coletivo intermunicipal e interestadual.</p>
-        <span class="dir-cit">"Eliminar barreiras físicas é o primeiro passo para a inclusão."</span>
-      </article>
-      <article class="direito-card">
-        <div class="dir-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-        <h3>Saúde e Prioridade</h3>
-        <p>Planos de saúde são obrigados a cobrir tratamentos, terapias e tecnologias assistivas. O atendimento prioritário em filas e serviços é garantido pela Lei Brasileira de Inclusão.</p>
-        <span class="dir-cit">"O tempo do cuidado é agora e a lei protege essa urgência."</span>
-      </article>
-      <article class="direito-card">
-        <div class="dir-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg></div>
-        <h3>Documentação Essencial</h3>
-        <p>Para acessar a maioria dos direitos você vai precisar do laudo médico, RG, CPF e comprovante de renda. Guarde cópias autenticadas. O laudo não tem prazo de validade.</p>
-        <span class="dir-cit">"Um papel guardado com cuidado abre muitas portas."</span>
-      </article>
-      <article class="direito-card">
-        <div class="dir-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-        <h3>Apoio à Família</h3>
-        <p>Cuidadores também têm direitos. Afastamento do trabalho sem prejuízo salarial para acompanhamento médico, possibilidade de redução de jornada e prioridade em filas e serviços públicos.</p>
-        <span class="dir-cit">"Cuidar de quem cuida é também um ato de justiça."</span>
-      </article>
-    </div>
-
-    <div class="nota-legal">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      <p>Informações baseadas na legislação brasileira vigente (Lei nº 13.146/2015 — LBI, Lei nº 8.742/1993 — LOAS, Lei nº 10.048/2000). Para casos específicos, consulte um advogado ou defensor público.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════
-     04 — SEGURANÇA + LISTA (ROXO)
-═══════════════════════════ -->
-<section id="seguranca">
-
-  <svg class="ondas-topo" viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="height:180px;">
-    <path d="M0,100 C360,160 720,40 1080,100 C1260,130 1380,80 1440,90 L1440,0 L0,0 Z" fill="#c5b3e8" opacity="0.38"/>
-    <path d="M0,130 C280,70 560,150 840,115 C1080,85 1280,135 1440,110 L1440,0 L0,0 Z" fill="#7e57c2" opacity="0.20"/>
-  </svg>
-
-  <svg class="ondas-bg" viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="height:200px;">
-    <path d="M0,90 C300,150 600,50 900,110 C1100,150 1300,90 1440,110 L1440,200 L0,200 Z" fill="#c5b3e8" opacity="0.28"/>
-    <path d="M0,135 C240,95 500,158 760,128 C1000,98 1220,148 1440,122 L1440,200 L0,200 Z" fill="#7e57c2" opacity="0.16"/>
-  </svg>
-
-  <div class="sec-inner" style="padding-top:160px;">
-    <div class="sec-header">
-      <span class="sec-label" style="color:var(--roxo-esc)">Cofre de identidade</span>
-      <h2 class="sec-h2">seus dados têm nível clínico de proteção.</h2>
-      <span class="sec-manuscrito" style="color:var(--roxo-esc)">o cofre é seu. a chave também.</span>
-      <p class="sec-p">Cada registro no Legado Azul é único, intransferível e protegido como a identidade de quem você ama. Tratamos seus dados com o máximo de cuidado, transparência e respeito absoluto.</p>
-    </div>
-
-    <div class="selos-wrap">
-      <div class="selo"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg><span class="selo-nm">AES-256</span><span class="selo-sub">Criptografia bancária</span></div>
-      <div class="selo"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span class="selo-nm">TLS 1.3</span><span class="selo-sub">Dados em trânsito</span></div>
-      <div class="selo"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M12 11c1.6569 0 3-1.3431 3-3s-1.3431-3-3-3-3 1.3431-3 3 1.3431 3 3 3zm0 0c-3.3137 0-6 1.3431-6 3v1h12v-1c0-1.6569-2.6863-3-6-3z"/></svg><span class="selo-nm">Biometria</span><span class="selo-sub">FaceID & Digital</span></div>
-      <div class="selo"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg><span class="selo-nm">MFA</span><span class="selo-sub">2 fatores</span></div>
-      <div class="selo"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><rect x="8" y="13" width="8" height="6" rx="1"/><path d="M10 13V9a2 2 0 0 1 4 0v4"/></svg><span class="selo-nm">LGPD</span><span class="selo-sub">Conformidade total</span></div>
-      <div class="selo"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg><span class="selo-nm">Zero ads</span><span class="selo-sub">Sem anúncios</span></div>
-    </div>
-
-    <div class="seg-grid">
-      <article class="seg-card">
-        <div class="seg-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-        <h3>Criptografia de nível bancário</h3>
-        <p>Todos os registros — laudos, fotos, histórico clínico — são protegidos com AES-256. Em trânsito, usamos TLS 1.3. Seus dados são completamente ilegíveis fora da sua conta.</p>
-        <span class="seg-cit">"O que está no Legado Azul só existe para quem tem a chave."</span>
-      </article>
-      <article class="seg-card">
-        <div class="seg-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M12 11c1.6569 0 3-1.3431 3-3s-1.3431-3-3-3-3 1.3431-3 3 1.3431 3 3 3zm0 0c-3.3137 0-6 1.3431-6 3v1h12v-1c0-1.6569-2.6863-3-6-3z"/></svg></div>
-        <h3>Acesso biométrico</h3>
-        <p>O app abre apenas com Face ID ou impressão digital — essencial para um app que guarda laudos médicos. Também oferecemos MFA e acesso Passwordless via Magic Links.</p>
-        <span class="seg-cit">"Só entra quem você é — não o que você lembra."</span>
-      </article>
-      <article class="seg-card">
-        <div class="seg-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <h3>Cada pessoa vê o que precisa</h3>
-        <p>No Plano Família, o administrador tem acesso completo. Um convidado acessa apenas o que você liberar. Você revoga com um clique e tudo fica registrado em auditoria.</p>
-        <span class="seg-cit">"Acesso certo, para a pessoa certa, no momento certo."</span>
-      </article>
-      <article class="seg-card">
-        <div class="seg-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-        <h3>Trilha de auditoria</h3>
-        <p>Você sabe exatamente o que acontece com cada dado. O sistema registra cada acesso com data e hora. Se algo parecer suspeito, você revoga imediatamente. Nada nas sombras.</p>
-        <span class="seg-cit">"Transparência não é opcional — é a base da confiança."</span>
-      </article>
-      <article class="seg-card">
-        <div class="seg-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><rect x="8" y="13" width="8" height="6" rx="1"/><path d="M10 13V9a2 2 0 0 1 4 0v4"/></svg></div>
-        <h3>LGPD e direito ao esquecimento</h3>
-        <p>Coletamos apenas o essencial. Quer sair? Um botão claro exclui todos os seus registros permanentemente — sem burocracia, sem letras miúdas, sem retenção indevida.</p>
-        <span class="seg-cit">"Seus dados pertencem à sua família. Sempre."</span>
-      </article>
-      <article class="seg-card">
-        <div class="seg-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <h3>Backup e legado permanente</h3>
-        <p>Se o celular quebrar, o Legado não se perde. Backups na nuvem com AES-256. Ao cancelar, seus dados ficam disponíveis por 12 meses em modo leitura e podem ser exportados.</p>
-        <span class="seg-cit">"O que você construiu não desaparece com uma assinatura cancelada."</span>
-      </article>
-    </div>
-
-    <div class="mn-card">
-      <div class="mn-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
       <div>
-        <h3 class="mn-titulo">Você paga pela assinatura. Você não é o produto.</h3>
-        <p class="mn-texto">O Legado Azul não exibe anúncios. Nunca. Não vendemos dados para parceiros, não alimentamos algoritmos publicitários e não integramos com terceiros sem o seu consentimento. Nosso modelo é simples: você paga uma mensalidade justa e recebe um serviço que cuida da sua família.</p>
+        <span class="pilar-tag" style="color:var(--verde-esc)">💚 Pilar 2 — Família</span>
+        <h2 class="pilar-h2">Memórias<br>e Valores</h2>
+        <span class="pilar-ms" style="color:var(--verde-esc)">a memória compartilhada.</span>
+        <p class="pilar-p">O espaço onde o afeto encontra a organização. Tudo que a pessoa que você ama precisa — registrado com carinho e acessível quando mais importa.</p>
+        <div class="recursos-lista">
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(157,213,187,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#3a9e72" stroke-width="1.8" stroke-linecap="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></div>
+            <div><div class="rec-nm">Alimentação e Afeto</div><div class="rec-sub">Preferências, aversões, rituais à mesa e alergias — o que traz conforto nas refeições</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(157,213,187,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#3a9e72" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <div><div class="rec-nm">Comunicação e Comportamento</div><div class="rec-sub">Sinais de desconforto, vocabulário próprio e o que NÃO fazer durante uma crise</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(157,213,187,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#3a9e72" stroke-width="1.8" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+            <div><div class="rec-nm">Interesses e Objeto de Conforto</div><div class="rec-sub">Paixões, hobbies, o que faz sorrir e o objeto de apego que nunca pode faltar</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(157,213,187,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#3a9e72" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div><div class="rec-nm">Rede de Apoio</div><div class="rec-sub">Contatos de emergência, médico de referência e cuidadores de confiança</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     🩺 SAÚDE
+════════════════════════════════ -->
+<section id="saude" class="pilar-sec">
+  <svg class="ondas-topo" viewBox="0 0 1440 180" preserveAspectRatio="none" style="height:180px;">
+    <path d="M0,80 C360,150 720,30 1080,90 C1260,120 1380,70 1440,85 L1440,0 L0,0 Z" fill="#f7d98a" opacity="0.40"/>
+    <path d="M0,115 C280,60 560,140 840,105 C1080,78 1280,128 1440,100 L1440,0 L0,0 Z" fill="#c8920a" opacity="0.20"/>
+  </svg>
+  <svg class="ondas-bg" viewBox="0 0 1440 200" preserveAspectRatio="none" style="height:200px;">
+    <path d="M0,90 C360,150 720,40 1080,100 C1260,130 1380,80 1440,100 L1440,200 L0,200 Z" fill="#f7d98a" opacity="0.30"/>
+    <path d="M0,135 C240,90 500,158 760,125 C1000,95 1220,148 1440,122 L1440,200 L0,200 Z" fill="#c8920a" opacity="0.14"/>
+  </svg>
+  <div class="sec-inner" style="padding-top:160px;">
+    <div class="pilar-grid">
+      <div>
+        <span class="pilar-tag" style="color:var(--amar-esc)">🩺 Pilar 3 — Saúde</span>
+        <h2 class="pilar-h2">Dossiê<br>de Saúde</h2>
+        <span class="pilar-ms" style="color:var(--amar-esc)">a gestão clínica integrada.</span>
+        <p class="pilar-p">Especialistas, clínicas, medicamentos e histórico clínico. Nunca mais comece uma consulta do zero — chegue com a história toda na ponta da língua.</p>
+        <div class="recursos-lista">
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(247,217,138,.35)"><svg viewBox="0 0 24 24" fill="none" stroke="#c8920a" stroke-width="1.8" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div><div class="rec-nm">Especialistas e Clínicas</div><div class="rec-sub">Neuropediatra, psiquiatra, pediatra — todos organizados com histórico de atendimento</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(247,217,138,.35)"><svg viewBox="0 0 24 24" fill="none" stroke="#c8920a" stroke-width="1.8" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+            <div><div class="rec-nm">Histórico de Consultas</div><div class="rec-sub">Linha do tempo clínica com queixas, condutas e resultados de cada atendimento</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(247,217,138,.35)"><svg viewBox="0 0 24 24" fill="none" stroke="#c8920a" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div>
+            <div><div class="rec-nm">Laudos e Relatórios</div><div class="rec-sub">Laudo do TEA, avaliações neuropsicológicas e relatórios organizados por data</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(247,217,138,.35)"><svg viewBox="0 0 24 24" fill="none" stroke="#c8920a" stroke-width="1.8" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+            <div><div class="rec-nm">Protocolo de Crise</div><div class="rec-sub">O que fazer, o que NÃO fazer, sinais de alerta e gatilhos — acessível a qualquer cuidador</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(247,217,138,.35)"><svg viewBox="0 0 24 24" fill="none" stroke="#c8920a" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div>
+            <div><div class="rec-nm">Medicamentos</div><div class="rec-sub">Dosagens, horários e histórico de uso — nunca mais esquecer na consulta</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="pilar-phone">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="pm">
+              <div class="pm-header">
+                <div class="pm-back" style="background:rgba(200,146,10,.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#c8920a" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></div>
+                <span class="pm-title">Dossiê de Saúde</span>
+              </div>
+              <div class="pm-banner" style="background:#c8920a"><p>Especialistas, clínicas, medicamentos e histórico. Nunca mais comece do zero.</p></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#c8920a"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div style="flex:1"><div class="pm-card-nm">Especialistas</div><div class="pm-card-sub">Médicos, clínicas e contatos</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#c8920a"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div style="flex:1"><div class="pm-card-nm">Histórico de Consultas</div><div class="pm-card-sub">Linha do tempo clínica</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#c8920a"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div><div style="flex:1"><div class="pm-card-nm">Laudos e Relatórios</div><div class="pm-card-sub">Documentos clínicos organizados</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#c8920a"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78"/></svg></div><div style="flex:1"><div class="pm-card-nm">Medicamentos</div><div class="pm-card-sub">Dosagens, horários e histórico</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#c8920a"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div style="flex:1"><div class="pm-card-nm">Protocolo de Crise</div><div class="pm-card-sub">O que fazer em situações críticas</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     🧠 TERAPIA
+════════════════════════════════ -->
+<section id="terapia" class="pilar-sec">
+  <svg class="ondas-topo" viewBox="0 0 1440 180" preserveAspectRatio="none" style="height:180px;">
+    <path d="M0,95 C360,158 720,35 1080,95 C1260,128 1380,75 1440,88 L1440,0 L0,0 Z" fill="#c5b3e8" opacity="0.40"/>
+    <path d="M0,128 C280,68 560,150 840,112 C1080,82 1280,136 1440,108 L1440,0 L0,0 Z" fill="#7e57c2" opacity="0.22"/>
+  </svg>
+  <svg class="ondas-bg" viewBox="0 0 1440 200" preserveAspectRatio="none" style="height:200px;">
+    <path d="M0,90 C300,148 600,48 900,108 C1100,148 1300,90 1440,110 L1440,200 L0,200 Z" fill="#c5b3e8" opacity="0.28"/>
+    <path d="M0,138 C240,95 500,158 760,128 C1000,98 1220,148 1440,122 L1440,200 L0,200 Z" fill="#7e57c2" opacity="0.16"/>
+  </svg>
+  <div class="sec-inner" style="padding-top:160px;">
+    <div class="pilar-grid reverse">
+      <div class="pilar-phone">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="pm">
+              <div class="pm-header">
+                <div class="pm-back" style="background:rgba(126,87,194,.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#7e57c2" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></div>
+                <span class="pm-title">Evolução Terapêutica</span>
+              </div>
+              <div class="pm-banner" style="background:#7e57c2"><p>Rastreie a rede multidisciplinar. Cada avanço registrado hoje é o grande legado de amanhã.</p></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#7e57c2"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div style="flex:1"><div class="pm-card-nm">Conquistas e Marcos</div><div class="pm-card-sub">Pequenas vitórias que constroem o legado</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#7e57c2"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div style="flex:1"><div class="pm-card-nm">Evolução Periódica</div><div class="pm-card-sub">Relatório de progresso por período</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#7e57c2"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/></svg></div><div style="flex:1"><div class="pm-card-nm">Metodologias Aplicadas</div><div class="pm-card-sub">ABA, Denver, TEACCH e outras</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#7e57c2"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div style="flex:1"><div class="pm-card-nm">Profissionais e Clínicas</div><div class="pm-card-sub">Terapeutas, metodologias e contatos</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+              <div class="pm-card"><div class="pm-card-ico" style="background:#7e57c2"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div style="flex:1"><div class="pm-card-nm">Registro de Sessão</div><div class="pm-card-sub">O que foi trabalhado em cada encontro</div></div><div class="pm-ar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="pilar-tag" style="color:var(--roxo-esc)">🧠 Pilar 4 — Terapia</span>
+        <h2 class="pilar-h2">Evolução<br>Terapêutica</h2>
+        <span class="pilar-ms" style="color:var(--roxo-esc)">a rastreabilidade da evolução.</span>
+        <p class="pilar-p">Rastreie toda a rede multidisciplinar. Cada metodologia, cada sessão, cada profissional — tudo registrado e transformado em histórico contínuo de desenvolvimento.</p>
+        <div class="recursos-lista">
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(197,179,232,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#7e57c2" stroke-width="1.8" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div><div class="rec-nm">Conquistas e Marcos</div><div class="rec-sub">Cada avanço com data, área (comunicação, autonomia, social) e como aconteceu — preservado para sempre</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(197,179,232,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#7e57c2" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div><div class="rec-nm">Profissionais e Clínicas</div><div class="rec-sub">TO, fonoaudiólogo, psicólogo, ABA — com contato, especialidade, frequência e período de vínculo</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(197,179,232,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#7e57c2" stroke-width="1.8" stroke-linecap="round"><path d="M9 11l3 3L22 4"/></svg></div>
+            <div><div class="rec-nm">Metodologias Aplicadas</div><div class="rec-sub">ABA, Denver, TEACCH, DIR/Floortime — quem aplicou, quando e quais os resultados observados</div></div>
+          </div>
+          <div class="recurso-item">
+            <div class="rec-ico" style="background:rgba(197,179,232,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#7e57c2" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div><div class="rec-nm">Registro de Sessão</div><div class="rec-sub">O que foi trabalhado, engajamento, destaques e metas para o próximo encontro — por terapia</div></div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Lista de espera -->
-    <div class="espera-bolha">
-      <div class="espera-topo">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <span class="espera-label">Lista de espera · Legado Azul</span>
-      </div>
-      <span class="espera-numero" id="espera-numero">—</span>
-      <span class="espera-contador-label">famílias já reservaram seu lugar</span>
-      <h2 class="espera-titulo">Quando estiver pronto,<br>você vai saber em primeira mão.</h2>
-      <p class="espera-texto">Deixe seu e-mail. Sem spam, sem pressão.<br>Só um aviso carinhoso quando o app abrir as portas.</p>
-      <form class="espera-form" id="espera-form" onsubmit="enviarEspera(event)">
-        <input class="espera-input" type="email" id="espera-email" placeholder="seu@email.com" required autocomplete="email">
-        <button class="espera-btn" type="submit" id="espera-btn">
+    <!-- CTA -->
+    <div class="cta-espera" id="espera">
+      <span style="font-size:1.6rem;display:block;margin-bottom:12px">💙</span>
+      <h3>Quando estiver pronto,<br>você vai saber em primeira mão.</h3>
+      <p>Deixe seu e-mail. Sem spam, sem pressão.<br>Só um aviso carinhoso quando o app abrir as portas.</p>
+      <div class="cta-form">
+        <input class="cta-input" type="email" id="espera-email" placeholder="seu@email.com" required autocomplete="email">
+        <button class="cta-btn" id="espera-btn" onclick="enviarEspera()">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
           Reservar meu lugar
         </button>
-      </form>
-      <p class="espera-feedback" id="espera-feedback"></p>
-      <p class="espera-privacidade">Seus dados são só seus. Nunca vendemos, nunca compartilhamos.</p>
-      <span class="espera-manuscrito">o legado começa agora.</span>
+      </div>
+      <p class="cta-feedback" id="espera-feedback"></p>
+      <p class="cta-nota">Seus dados são só seus. Nunca vendemos, nunca compartilhamos.</p>
+      <span class="cta-ms">o legado começa agora.</span>
     </div>
-
-    <div class="insta-card">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-      <h3>Pronto para criar o seu legado?</h3>
-      <p>O app está sendo construído com o mesmo cuidado que você dedica ao seu amor. Acompanhe cada passo do desenvolvimento e saiba antes de todo mundo quando o Legado Azul estiver pronto.</p>
-      <a href="https://www.instagram.com/legadoazulapp/" target="_blank" rel="noopener" class="btn-insta">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        Acompanhe no Instagram
-      </a>
-    </div>
-
   </div>
 </section>
 
@@ -1826,133 +539,49 @@ footer p {
   <p>© 2025 Legado Azul · cada registro é um legado · <a href="https://www.instagram.com/legadoazulapp/" target="_blank" style="color:#a8cce8;text-decoration:none">@legadoazulapp</a></p>
 </footer>
 
-<script src="https://unpkg.com/lucide@latest"></script>
 <script>
-/* ══ Nav ativo no scroll ══ */
+/* Nav ativo no scroll */
 const secoes = document.querySelectorAll('section[id]');
 const navIcos = document.querySelectorAll('.nav-ico');
-
-const observer = new IntersectionObserver((entries) => {
+const obs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       navIcos.forEach(n => n.classList.remove('ativo'));
-      const ativo = document.querySelector(`.nav-ico[href="#${e.target.id}"]`);
-      if (ativo) ativo.classList.add('ativo');
+      const a = document.querySelector(`.nav-ico[href="#${e.target.id}"]`);
+      if (a) a.classList.add('ativo');
     }
   });
 }, { threshold: 0.3 });
+secoes.forEach(s => obs.observe(s));
 
-secoes.forEach(s => observer.observe(s));
-
-/* ══ Lista de espera ══ */
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrFgDh1H-_BJLPZzK5h9-ucb7OHWqSMYxDIB6n4j0fLjkgLISijt0Psi2BmdStdTVVoA/exec';
-
-async function carregarContador() {
+/* Lista de espera */
+const APPS_URL = 'https://script.google.com/macros/s/AKfycbwrFgDh1H-_BJLPZzK5h9-ucb7OHWqSMYxDIB6n4j0fLjkgLISijt0Psi2BmdStdTVVoA/exec';
+async function enviarEspera() {
+  const email = document.getElementById('espera-email').value.trim();
+  const btn = document.getElementById('espera-btn');
+  const fb = document.getElementById('espera-feedback');
+  if (!email) return;
+  btn.disabled = true; btn.textContent = 'Enviando…';
+  fb.className = 'cta-feedback'; fb.textContent = '';
   try {
-    const res  = await fetch(APPS_SCRIPT_URL + '?acao=contar');
-    const data = await res.json();
-    const el   = document.getElementById('espera-numero');
-    if (el && data.total !== undefined) animarContador(el, data.total);
-  } catch {
-    const el = document.getElementById('espera-numero');
-    if (el) el.textContent = '···';
-  }
-}
-
-function animarContador(el, total) {
-  const dur   = 1400;
-  const start = performance.now();
-  function step(now) {
-    const p = Math.min((now - start) / dur, 1);
-    const e = 1 - Math.pow(1 - p, 3);
-    el.textContent = Math.floor(e * total).toLocaleString('pt-BR');
-    if (p < 1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-
-async function enviarEspera(ev) {
-  ev.preventDefault();
-  const email    = document.getElementById('espera-email').value.trim();
-  const btn      = document.getElementById('espera-btn');
-  const feedback = document.getElementById('espera-feedback');
-
-  btn.disabled         = true;
-  btn.textContent      = 'Enviando…';
-  feedback.className   = 'espera-feedback';
-  feedback.textContent = '';
-
-  try {
-    const res  = await fetch(APPS_SCRIPT_URL + '?acao=cadastrar&email=' + encodeURIComponent(email));
+    const res = await fetch(APPS_URL + '?acao=cadastrar&email=' + encodeURIComponent(email));
     const data = await res.json();
     if (data.status === 'ok') {
-      feedback.textContent = '💙 Lugar reservado! Te avisaremos quando o app abrir.';
-      feedback.className   = 'espera-feedback sucesso';
+      fb.textContent = '💙 Lugar reservado! Te avisaremos quando o app abrir.';
+      fb.className = 'cta-feedback sucesso';
       document.getElementById('espera-email').value = '';
-      const el = document.getElementById('espera-numero');
-      if (el && data.total !== undefined) animarContador(el, data.total);
     } else if (data.status === 'duplicado') {
-      feedback.textContent = 'Este e-mail já está na lista. Avisaremos em breve!';
-      feedback.className   = 'espera-feedback sucesso';
+      fb.textContent = 'Este e-mail já está na lista. Avisaremos em breve!';
+      fb.className = 'cta-feedback sucesso';
     } else { throw new Error(); }
   } catch {
-    feedback.textContent = 'Algo deu errado. Tente novamente em instantes.';
-    feedback.className   = 'espera-feedback erro';
+    fb.textContent = 'Algo deu errado. Tente novamente em instantes.';
+    fb.className = 'cta-feedback erro';
   } finally {
-    btn.disabled  = false;
-    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg> Reservar meu lugar';
+    btn.disabled = false;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" style="width:14px;height:14px;stroke:white"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg> Reservar meu lugar';
   }
 }
-
-/* ══ Formulário de relato ══ */
-const RELATOS_URL = 'https://script.google.com/macros/s/SEU_ID_RELATOS_AQUI/exec';
-
-function toggleFormRelato() {
-  const wrap = document.getElementById('form-relato-wrap');
-  const btn  = document.getElementById('btn-abrir-form');
-  const aberto = wrap.classList.toggle('aberto');
-  if (aberto) {
-    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Cancelar';
-  } else {
-    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Deixar meu relato';
-  }
-}
-
-async function enviarRelato() {
-  const texto    = document.getElementById('relato-texto').value.trim();
-  const autor    = document.getElementById('relato-autor').value.trim();
-  const btn      = document.getElementById('btn-enviar-relato');
-  const feedback = document.getElementById('relato-feedback');
-
-  if (!texto) {
-    feedback.textContent = 'Escreva uma mensagem antes de compartilhar.';
-    feedback.className   = 'form-relato-feedback erro';
-    return;
-  }
-
-  btn.disabled    = true;
-  btn.textContent = 'Enviando…';
-  feedback.className   = 'form-relato-feedback';
-  feedback.textContent = '';
-
-  try {
-    const params = new URLSearchParams({ acao: 'relato', texto, autor: autor || 'Relato anônimo' });
-    await fetch(RELATOS_URL + '?' + params.toString());
-    feedback.textContent = '💙 Obrigada por compartilhar. Seu relato será revisado com carinho.';
-    feedback.className   = 'form-relato-feedback sucesso';
-    document.getElementById('relato-texto').value = '';
-    document.getElementById('relato-autor').value = '';
-    setTimeout(() => toggleFormRelato(), 2800);
-  } catch {
-    feedback.textContent = 'Algo deu errado. Tente novamente em instantes.';
-    feedback.className   = 'form-relato-feedback erro';
-  } finally {
-    btn.disabled    = false;
-    btn.textContent = 'Compartilhar';
-  }
-}
-
-document.addEventListener('DOMContentLoaded', carregarContador);
 </script>
 </body>
 </html>

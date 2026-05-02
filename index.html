@@ -148,8 +148,16 @@ footer p { font-size:.78rem; color:#bbb; font-family:var(--ft); }
 
 /* ═══ RESPONSIVO ═══ */
 @media (max-width:900px) {
-  .hero-grid { grid-template-columns:1fr; }
-  .hero-visual { display:none; }
+  .hero-grid { grid-template-columns:1fr; text-align:center; }
+  .hero-visual { display:flex; justify-content:center; margin-bottom:8px; order:-1; }
+  .hero-digital-wrap > svg { width:180px; height:220px; }
+  .hero-p { margin-left:auto; margin-right:auto; }
+  .hero-btns { justify-content:center; }
+  /* Tags reposicionadas para tela pequena */
+  .tag-1 { top:10px;  left:10px;  font-size:.62rem; padding:6px 10px; }
+  .tag-2 { top:10px;  right:10px; font-size:.62rem; padding:6px 10px; }
+  .tag-3 { bottom:30px; left:10px; font-size:.62rem; padding:6px 10px; }
+  .tag-4 { bottom:10px; right:10px; font-size:.62rem; padding:6px 10px; }
   .pilar-grid { grid-template-columns:1fr; gap:40px; }
   .pilar-grid.reverse { direction:ltr; }
   .pilar-phone { order:-1; }
@@ -159,10 +167,12 @@ footer p { font-size:.78rem; color:#bbb; font-family:var(--ft); }
 }
 @media (max-width:600px) {
   .hero-h1 { font-size:1.8rem; }
+  .hero-digital-wrap > svg { width:160px; height:196px; }
   .pilar-h2 { font-size:1.6rem; }
   nav { padding:0 4%; }
   .nav-ico { width:36px; height:36px; }
   .phone-frame { width:220px; }
+  .tag-1, .tag-2, .tag-3, .tag-4 { font-size:.58rem; padding:5px 9px; }
 }
 </style>
 </head>
